@@ -2,8 +2,6 @@
 
 warning('OFF');
 
-spm('defaults', 'fMRI');
-
 folderToCover = fullfile(pwd, 'src');
 testFolder = fullfile(pwd, 'tests');
 
