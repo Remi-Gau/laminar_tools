@@ -19,7 +19,7 @@ function test_MeanDeconvolution
 
     NbLayers = 6;
 
-    Data =  GenerateDataROI(OptGenData, 1, 1);
+    Data =  GenerateGroupDataROI(OptGenData, 1, 1);
 
     MeanData = mean(Data);
 
