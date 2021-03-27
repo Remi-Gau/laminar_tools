@@ -33,7 +33,7 @@ function [BetaHat] = RunLaminarGlm(Data, DesignMatrix)
     end
 
     Data = Data';
-    
+
     BetaHat = nan(1, size(DesignMatrix, 2));
     if ~isempty(Data)
         BetaHat = pinv(DesignMatrix) * Data;

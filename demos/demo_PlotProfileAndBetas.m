@@ -1,9 +1,9 @@
 %% (C) Copyright 2020 Remi Gau
 
-OneRoi
-TwoRois
-TwoRoisSeveralConditions
-OneRoiTwoConditionsDifference
+OneRoi;
+TwoRois;
+TwoRoisSeveralConditions;
+OneRoiTwoConditionsDifference;
 
 function OneRoi
 

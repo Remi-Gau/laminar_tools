@@ -3,7 +3,7 @@
 function Opt = CheckProfilePlottingOptions(Opt)
 
     [~, ~, Opt] = GetPlottingDefaults(Opt);
-    
+
     % define subplot grid
     if ~isfield(Opt, 'm')
         Opt.m = size(Opt.Specific, 2);

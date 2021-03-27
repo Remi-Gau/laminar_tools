@@ -13,7 +13,7 @@ function test_MeanDeconvolution
     OptGenData.NbSubject = 1;
     OptGenData.NbRuns = 200;
     OptGenData.NbLayers = 6;
-    
+
     ROI = 1;
     Cdt = 1;
 
