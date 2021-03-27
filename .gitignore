@@ -1,4 +1,6 @@
 *.sh~
 *.m~
 
+*.tif
+
 docs/build/*
