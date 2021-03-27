@@ -1,21 +1,21 @@
 % (C) Copyright 2021 Remi Gau
 
 function  [NbLayers, AverageType, Opt] = GetPlottingDefaults(Opt)
-    
+
     Opt.NbLayers = 6;
-    
-     % average across vertices / voxels
+
+    % average across vertices / voxels
     Opt.AverageType = 'median';
 
     Opt.Fontsize = 10;
     Opt.Visible = 'on';
 
     Opt.ErrorBarType = 'SEM';
-    
+
     Opt.Alpha = 0.05 / 4;
 
     Opt.FigDim = [50, 50, 600, 600];
-    
+
     Opt.Raster.AddColorBar = false;
 
     if ~isfield(Opt, 'Title')
@@ -31,6 +31,6 @@ function  [NbLayers, AverageType, Opt] = GetPlottingDefaults(Opt)
     end
 
     NbLayers =  Opt.NbLayers;
-    AverageType =  Opt.AverageType ;
-    
+    AverageType =  Opt.AverageType;
+
 end

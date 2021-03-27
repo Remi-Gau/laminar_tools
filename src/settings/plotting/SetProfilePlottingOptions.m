@@ -7,9 +7,9 @@ function Opt = SetProfilePlottingOptions(Opt)
     Opt.PlotPValue = true;
     Opt.PermutationTest.Do = true;
     Opt.PermutationTest.Plot = false;
-    
+
     Opt.PlotQuadratic = false;
-    
+
     Opt.PerformDeconvolution = true;
 
     Opt.ShadedErrorBar = false;

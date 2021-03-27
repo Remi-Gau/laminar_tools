@@ -9,6 +9,7 @@ on:
     branches: '*'
 
 env:
+  CODECOV_TOKEN: 7e8d534a-aa5f-4163-9526-e2dcfef6b99b
   OCTFLAGS: --no-gui --no-window-system --silent
 
 jobs:

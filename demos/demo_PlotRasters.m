@@ -14,49 +14,48 @@ function OneRoi
     Opt.NbVertices = 1000;
 
     % use iid data across layer or add some layer error covariance
-    Opt.IID = false;
+    Opt.IID = true;
 
     ROI = 1;
     Cdt = 1;
 
     Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
 
+    Opt.StdDevWithinSubject = Opt.Betas(1) * 20;
+
     Data = GenerateSubjectSurfaceDataLaminarProfiles(Opt);
-    
-    SortingData =  Data;
-    
-    Opt.Raster.Sort =  true;
-    Opt.Raster.CrossValidate =  false;
-    
+
+    SortingData = Data;
+
+    Opt.Raster.Sort = true;
+    Opt.Raster.CrossValidate = true;
+
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, 'Cst');
 
-    R
-    
     % proportion of FWHM for
     Opt.Raster.VerticalFWHM = 1 / 100;
     Opt.Raster.ColorMap = SeismicColorMap(1000);
-    
-    Opt.Raster.AddXLabel =  true;
+
+    Opt.Raster.AddXLabel = true;
 
     [~, ~, Opt] = GetPlottingDefaults(Opt);
-    
-    subplot(121)
+
+    subplot(121);
     Opt.Title = 'ROI 1 - Sorting condition';
-    PlotOneRaster(mean(Data, 3), Opt);
-    
-    subplot(122)
+    PlotOneRaster(mean(SortingData, 3), Opt);
+
+    subplot(122);
     Opt.Title = 'ROI 1 - Sorted condition';
     Opt.Raster.AddColorBar = true;
     PlotOneRaster(mean(Data, 3), Opt);
 
-    %     Opt.Specific{1}.Data = Data;
-    %     Opt.Specific{1}.SubjectVec = SubjectVec;
-    %     Opt.Specific{1}.ConditionVec = ones(size(Data, 1), 1);
-    %     Opt.Specific{1}.RoiVec = ones(size(Data, 1), 1);
+    % Opt.Specific{1}.Data = Data;
+    % Opt.Specific{1}.SubjectVec = SubjectVec;
+    % Opt.Specific{1}.ConditionVec = ones(size(Data, 1), 1);
+    % Opt.Specific{1}.RoiVec = ones(size(Data, 1), 1);
     %
-    %     Opt.Specific{1}.XLabel = {'ROI 1'};
+    % Opt.Specific{1}.XLabel = {'ROI 1'};
 
-
-    %     PrintFigure(pwd);
+    % PrintFigure(pwd);
 
 end
