@@ -11,23 +11,27 @@ function OneRoi
     OptGenData.NbSubject = 1;
     OptGenData.NbRuns = 2;
     OptGenData.NbLayers = 6;
-    OptGenData.NbVertices = 100;
+    OptGenData.NbVertices = 200;
     
     % use iid data across layer or add some layer error covariance
     OptGenData.IID = false;
-    
-    % proportion of FWHM for
-    OptGenData.Raster.VerticalFWHM = 1/500;
-
+   
     ROI = 1;
     Cdt = 1;
     
-    OptGenData = SetParametersProfileSimulation(OptGenData, ROI, Cdt);
-    Data = GenerateSubjectSurfaceDataLaminarProfiles(OptGenData);
+    Opt = SetParametersProfileSimulation(OptGenData, ROI, Cdt);
     
-    [~, ~, OptGenData] = GetPlottingDefaults(OptGenData);
-    PlotOneRaster(mean(Data, 3), OptGenData)
+    Data = GenerateSubjectSurfaceDataLaminarProfiles(Opt);
+
+    % proportion of FWHM for
+    Opt.Raster.VerticalFWHM = 1/100;
+    Opt.Raster.ColorMap = SeismicColorMap(1000);
+    Opt.Raster.AddColorBar = true;
+    Opt.Raster.AddXLabel =  true;
     
+    [~, ~, Opt] = GetPlottingDefaults(Opt);
+    PlotOneRaster(mean(Data, 3), Opt)
+
 %     Opt.Specific{1}.Data = Data;
 %     Opt.Specific{1}.SubjectVec = SubjectVec;
 %     Opt.Specific{1}.ConditionVec = ones(size(Data, 1), 1);

@@ -2,14 +2,13 @@
 
 function PlotOneRaster(Data, Opt, CLIM)
 
-    if nargin < 3
-        CLIM = [min(Data(:)) max(Data(:))];
-    end
-    
-    DephLevels = round(linspace(100, 0, 8));
-    DephLevels([1; end]) = [];
-
     Data = imgaussfilt(Data,  [size(Data, 1) * Opt.Raster.VerticalFWHM  .001]);
+    
+    if nargin < 3
+        % use symmetrical scale by default
+        MAX = max(abs(Data(:)));
+        CLIM = [-MAX MAX];
+    end
     
     imagesc(flipud(Data), CLIM);
 
@@ -17,7 +16,15 @@ function PlotOneRaster(Data, Opt, CLIM)
 
     t = title(Opt.Title);
     set(t, 'fontsize', Opt.Fontsize);
+    
+    if Opt.Raster.AddXLabel
+        t = xlabel('cortical depth');
+        set(t, 'fontsize', Opt.Fontsize);
+    end
 
+    DephLevels = round(linspace(100, 0, 8));
+    DephLevels([1; end]) = [];
+    
     set(gca, ...
         'color', 'none', ...
         'tickdir','out', ...
@@ -28,4 +35,6 @@ function PlotOneRaster(Data, Opt, CLIM)
         'ticklength', [0.01 0], ...
         'fontsize', Opt.Fontsize);
 
+    PlotColorBar(Opt, CLIM);
+    
 end
