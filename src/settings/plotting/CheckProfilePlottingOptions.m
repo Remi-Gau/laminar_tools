@@ -58,7 +58,7 @@ function Opt = CheckProfilePlottingOptions(Opt)
         end
 
         if ~isfield(Opt.Specific{i}, 'LineColors')
-            Opt.Specific{i}.LineColors = RoiColours();
+            Opt.Specific{i}.LineColors = RoiColors();
         end
 
     end

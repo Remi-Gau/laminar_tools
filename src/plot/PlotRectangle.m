@@ -9,7 +9,7 @@ function PlotRectangle(Opt, PrintDepthLabel)
         PrintDepthLabel = true;
     end
 
-    COLOR_LAYERS = LayerColours();
+    COLOR_LAYERS = LayerColors();
     Opt.NbLayers = size(COLOR_LAYERS, 1);
 
     Ax = gca;
