@@ -1,14 +1,11 @@
 %% (C) Copyright 2020 Remi Gau
 
-function test_suite = test_PlotProfileAndBetas %#ok<*STOUT>
-    try % assignment of 'localfunctions' is necessary in Matlab >= 2016
-        test_functions = localfunctions(); %#ok<*NASGU>
-    catch % no problem; early Matlab versions can use initTestSuite fine
-    end
-    initTestSuite;
-end
+OneRoi
+TwoRois
+TwoRoisSeveralConditions
+OneRoiTwoConditionsDifference
 
-function test_OneRoi
+function OneRoi
 
     close all;
 
@@ -19,7 +16,7 @@ function test_OneRoi
     OptGenData.NbLayers = 6;
 
     %%
-    [Data, SubjectVec] = GenerateDataROI(OptGenData, 1, 1);
+    [Data, SubjectVec] = GenerateGroupDataROI(OptGenData, 1, 1);
     Opt.Specific{1}.Data = Data;
     Opt.Specific{1}.SubjectVec = SubjectVec;
     Opt.Specific{1}.ConditionVec = ones(size(Data, 1), 1);
@@ -37,15 +34,15 @@ function test_OneRoi
 
 end
 
-function test_TwoRois
+function TwoRois
 
     OptGenData.NbSubject = 10;
     OptGenData.NbRuns = 20;
     OptGenData.NbLayers = 6;
 
     %%
-    [Data1, SubjectVec1] =  GenerateDataROI(OptGenData, 1, 1);
-    [Data2, SubjectVec2] =  GenerateDataROI(OptGenData, 1, 2);
+    [Data1, SubjectVec1] =  GenerateGroupDataROI(OptGenData, 1, 1);
+    [Data2, SubjectVec2] =  GenerateGroupDataROI(OptGenData, 1, 2);
 
     Data = cat(1, Data1, Data2);
     SubjectVec = cat(1, SubjectVec1, SubjectVec2);
@@ -67,7 +64,7 @@ function test_TwoRois
 
 end
 
-function test_TwoRoisSeveralConditions
+function TwoRoisSeveralConditions
 
     OptGenData.NbSubject = 10;
     OptGenData.NbRuns = 20;
@@ -79,8 +76,8 @@ function test_TwoRoisSeveralConditions
     Opt.Specific{1, iColumn}.Titles = 'Condition 1';
     Opt.Specific{1, iColumn}.XLabel = {'ROI 1', 'ROI 2'};
 
-    [Data1, SubjectVec1] =  GenerateDataROI(OptGenData, 1, 1);
-    [Data2, SubjectVec2] =  GenerateDataROI(OptGenData, 1, 2);
+    [Data1, SubjectVec1] =  GenerateGroupDataROI(OptGenData, 1, 1);
+    [Data2, SubjectVec2] =  GenerateGroupDataROI(OptGenData, 1, 2);
 
     Data = cat(1, Data1, Data2);
     SubjectVec = cat(1, SubjectVec1, SubjectVec2);
@@ -96,8 +93,8 @@ function test_TwoRoisSeveralConditions
     Opt.Specific{1, iColumn}.Titles = 'Condition 2';
     Opt.Specific{1, iColumn}.XLabel = {'ROI 1', 'ROI 2'};
 
-    [Data1, SubjectVec1] =  GenerateDataROI(OptGenData, 2, 1);
-    [Data2, SubjectVec2] =  GenerateDataROI(OptGenData, 2, 2);
+    [Data1, SubjectVec1] =  GenerateGroupDataROI(OptGenData, 2, 1);
+    [Data2, SubjectVec2] =  GenerateGroupDataROI(OptGenData, 2, 2);
 
     Data = cat(1, Data1, Data2);
     SubjectVec = cat(1, SubjectVec1, SubjectVec2);
@@ -116,7 +113,7 @@ function test_TwoRoisSeveralConditions
 
 end
 
-function test_OneRoiTwoConditionsDifference
+function OneRoiTwoConditionsDifference
 
     OptGenData.NbSubject = 10;
     OptGenData.NbRuns = 20;
@@ -130,8 +127,8 @@ function test_OneRoiTwoConditionsDifference
     Opt.Specific{1, iColumn}.Titles = ' ';
     Opt.Specific{1, iColumn}.XLabel = {'Cdt 1', 'Cdt 2'};
 
-    [Data1, SubjectVec1] =  GenerateDataROI(OptGenData, 1, 1);
-    [Data2, SubjectVec2] =  GenerateDataROI(OptGenData, 1, 2);
+    [Data1, SubjectVec1] =  GenerateGroupDataROI(OptGenData, 1, 1);
+    [Data2, SubjectVec2] =  GenerateGroupDataROI(OptGenData, 1, 2);
 
     Data = cat(1, Data1, Data2);
     SubjectVec = cat(1, SubjectVec1, SubjectVec2);
@@ -150,7 +147,7 @@ function test_OneRoiTwoConditionsDifference
     Opt.Specific{1, iColumn}.Titles = '';
     Opt.Specific{1, iColumn}.XLabel = {'Difference'};
 
-    [Data, SubjectVec] = GenerateDataROI(OptGenData, 1, 1);
+    [Data, SubjectVec] = GenerateGroupDataROI(OptGenData, 1, 1);
     Opt.Specific{1, iColumn}.Data = Data;
     Opt.Specific{1, iColumn}.SubjectVec = SubjectVec;
     Opt.Specific{1, iColumn}.ConditionVec = ones(size(Data, 1), 1);

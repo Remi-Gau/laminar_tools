@@ -2,9 +2,8 @@
 
 function Opt = CheckProfilePlottingOptions(Opt)
 
-    Opt.Fontsize = 10;
-    Opt.Visible = 'on';
-
+    [~, ~, Opt] = GetPlottingDefaults(Opt);
+    
     % define subplot grid
     if ~isfield(Opt, 'm')
         Opt.m = size(Opt.Specific, 2);
@@ -31,20 +30,12 @@ function Opt = CheckProfilePlottingOptions(Opt)
         Opt.FigDim(4) = 1600;
     end
 
-    if ~isfield(Opt, 'Title')
-        Opt.Title = '';
-    end
-
     if ~isfield(Opt, 'PermutationTest')
         Opt.PermutationTest.Do = false;
     end
 
     if ~isfield(Opt, 'PlotPValue')
         Opt.PlotPValue = true;
-    end
-
-    if ~isfield(Opt, 'PerformDeconvolution')
-        Opt.PerformDeconvolution = false;
     end
 
     if Opt.PermutationTest.Do
@@ -70,10 +61,6 @@ function Opt = CheckProfilePlottingOptions(Opt)
             Opt.Specific{i}.LineColors = RoiColours();
         end
 
-    end
-
-    if Opt.PerformDeconvolution
-        Opt.Title = [Opt.Title ' - deconvolved'];
     end
 
 end
