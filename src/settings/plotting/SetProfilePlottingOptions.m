@@ -2,22 +2,17 @@
 
 function Opt = SetProfilePlottingOptions(Opt)
 
-    [NbLayers] = GetPlottingDefaults();
+    [~, ~, Opt] = GetPlottingDefaults(Opt);
 
-    Opt.PlotQuadratic = false;
-
-    Opt.ErrorBarType = 'SEM';
-
-    Opt.Alpha = 0.05 / 4;
     Opt.PlotPValue = true;
     Opt.PermutationTest.Do = true;
     Opt.PermutationTest.Plot = false;
-
+    
+    Opt.PlotQuadratic = false;
+    
     Opt.PerformDeconvolution = true;
 
     Opt.ShadedErrorBar = false;
-
-    Opt.NbLayers = NbLayers;
 
     for i = 1:size(Opt.Specific, 2)
         if ~isfield(Opt.Specific{1, i}, 'PlotMinMaxType') || ...

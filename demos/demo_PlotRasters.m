@@ -28,6 +28,8 @@ function OneRoi
     Opt.Raster.ColorMap = SeismicColorMap(1000);
     Opt.Raster.AddColorBar = true;
     Opt.Raster.AddXLabel =  true;
+    
+    Opt.Title = 'ROI 1 - Condition Name';
 
     [~, ~, Opt] = GetPlottingDefaults(Opt);
     PlotOneRaster(mean(Data, 3), Opt);
@@ -37,14 +39,9 @@ function OneRoi
     %     Opt.Specific{1}.ConditionVec = ones(size(Data, 1), 1);
     %     Opt.Specific{1}.RoiVec = ones(size(Data, 1), 1);
     %
-    %     Opt.Specific{1}.Titles = 'ROI 1 - Condition Name';
     %     Opt.Specific{1}.XLabel = {'ROI 1'};
-    %
-    %     %%
-    %     Opt.Title = 'Figure title';
-    %
-    %     Opt = SetProfilePlottingOptions(Opt);
-    %     PlotProfileAndBetas(Opt);
+
+
     %     PrintFigure(pwd);
 
 end
