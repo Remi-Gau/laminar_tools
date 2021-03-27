@@ -28,7 +28,7 @@ OneRoi(Opt)
 OneRoTwoConditions(Opt)
 
 function OneRoi(Opt)
-    
+
     ROI = 1;
     Cdt = 1;
     Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
@@ -38,6 +38,9 @@ function OneRoi(Opt)
     SortingData = Data;
     
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, 'Cst');
+    
+    Data = BinRaster(Data);
+    SortingData = BinRaster(SortingData);
     
     [~, ~, Opt] = GetPlottingDefaults(Opt);
     
@@ -57,6 +60,11 @@ end
 
 function OneRoTwoConditions(Opt)
     
+    %% bin data
+    %     IdxToAvg = floor(linspace(1, numel(X_sort), NbBin + 1));
+    
+    NbBin = 500;
+    
     % TODO
     % Generating correlated conditions will require tweaking the
     % variance-covariance matrix used to generate data with
@@ -73,6 +81,9 @@ function OneRoTwoConditions(Opt)
     SortingData = GenerateSubjectSurfaceDataLaminarProfiles(Opt);
     
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, 'Cst');
+    
+    Data = BinRaster(Data, NbBin);
+    SortingData = BinRaster(SortingData, NbBin);
     
     [~, ~, Opt] = GetPlottingDefaults(Opt);
     
