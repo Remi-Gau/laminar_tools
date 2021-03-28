@@ -1,3 +1,5 @@
+% (C) Copyright 2021 Remi Gau
+
 function [Min, Max, Margin] = ComputeMargin(Min, Max, Proportion)
     %
     % Computes a margin that is a proportion larger of a Min-Max Range

@@ -1,4 +1,5 @@
 % (C) Copyright 2020 Remi Gau
+
 function [BetaHat] = RunLaminarGlm(Data, DesignMatrix)
     %
     % Runs a laminar GLM to decompose a laminar profile into a constant, a

@@ -1,3 +1,5 @@
+% (C) Copyright 2021 Remi Gau
+
 function DeconvolvedData = PerfomDeconvolution(Data, NbLayers, PeakToTailModel, NbLayerModel, Normalize)
     %
     % Data: array n X m array with m = number of layers and n = number of

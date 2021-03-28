@@ -1,4 +1,3 @@
-% (C) Copyright 2020 Agah Karakuzu
 % (C) Copyright 2020 Remi Gau
 
 function InitEnv()
@@ -39,7 +38,7 @@ function InitEnv()
                 pkg('load', packageName);
 
             catch
-                tryInstallFromForge(packageName);
+                TryInstallFromForge(packageName);
             end
         end
 
@@ -72,7 +71,7 @@ function retval = IsOctave
     retval = cacheval;
 end
 
-function tryInstallFromForge(packageName)
+function TryInstallFromForge(packageName)
 
     errorcount = 1;
     while errorcount % Attempt twice in case installation fails

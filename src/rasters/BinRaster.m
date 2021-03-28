@@ -1,9 +1,11 @@
+% (C) Copyright 2021 Remi Gau
+
 function Data = BinRaster(Data, NbBin)
-    
-    if nargin<2
-        NbBin = size(Data, 1)/10;
+
+    if nargin < 2
+        NbBin = size(Data, 1) / 10;
     end
-    
+
     IdxToAvg = floor(linspace(1, size(Data, 1), NbBin + 1));
     
     tmp = [];
@@ -13,5 +15,5 @@ function Data = BinRaster(Data, NbBin)
     end
     
     Data = tmp;
-    
+
 end

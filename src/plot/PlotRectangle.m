@@ -1,4 +1,5 @@
 % (C) Copyright 2020 Remi Gau
+
 function PlotRectangle(Opt, PrintDepthLabel)
 
     if nargin < 1 || isempty(Opt)

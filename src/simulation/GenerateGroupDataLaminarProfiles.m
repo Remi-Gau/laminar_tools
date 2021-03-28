@@ -1,4 +1,5 @@
 % (C) Copyright 2020 Remi Gau
+
 function [Data, SubjectVec] = GenerateGroupDataLaminarProfiles(Opt)
     %
     % generate data to be used for BOLD / MVPA laminar profile plotting

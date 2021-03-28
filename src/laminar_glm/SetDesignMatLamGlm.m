@@ -1,4 +1,5 @@
 % (C) Copyright 2020 Remi Gau
+
 function DesignMatrix = SetDesignMatLamGlm(NbLayers, Quad)
     %
     % Creates a design matrix for the laminar GLM. The regressors are orthogonalized
