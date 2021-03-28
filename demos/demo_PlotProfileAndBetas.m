@@ -1,7 +1,7 @@
 %% (C) Copyright 2020 Remi Gau
 
-clear
-clc
+clear;
+clc;
 
 OneRoi;
 TwoRois;
@@ -31,7 +31,6 @@ function OneRoi
     %%
     Opt.Title = 'Figure title';
 
-    Opt = SetProfilePlotParameters(Opt);
     PlotProfileAndBetas(Opt);
     PrintFigure(pwd);
 
@@ -61,7 +60,6 @@ function TwoRois
     %%
     Opt.Title = 'Condition 1 in ROi 1 and 2';
 
-    Opt = SetProfilePlotParameters(Opt);
     PlotProfileAndBetas(Opt);
     PrintFigure(pwd);
 
@@ -108,9 +106,8 @@ function TwoRoisSeveralConditions
     Opt.Specific{1, iColumn}.RoiVec = [ones(size(Data1, 1), 1); 2 * ones(size(Data2, 1), 1)];
 
     %%
-    Opt = SetProfilePlotParameters(Opt);
-
     Opt.Title = 'Condition 1 and 2 in ROi 1 and 2';
+
     PlotProfileAndBetas(Opt);
     PrintFigure(pwd);
 
@@ -159,7 +156,6 @@ function OneRoiTwoConditionsDifference
     %%
     Opt.Title = 'Condition 1 and 2 in ROi 1';
 
-    Opt = SetProfilePlotParameters(Opt);
     PlotProfileAndBetas(Opt);
     PrintFigure(pwd);
 

@@ -6,9 +6,9 @@ function  Opt = SetRasterPlotParameters(Opt)
 
     Opt.Specific{1, 1}.LineColors = 'k';
     Opt = SetProfilePlotParameters(Opt);
-    
+
     Opt = SetDefaultFields(Opt, GetRasterDefaults());
-    
+
     Opt.FigDim = [50, 50, 1200, 600];
     Opt.ErrorBarType = 'STD';
 
@@ -31,5 +31,5 @@ function RasterDefaults = GetRasterDefaults()
 
     RasterDefaults.Raster.AddXLabel = false;
     RasterDefaults.Raster.AddXTickLabel = false;
-    
+
 end

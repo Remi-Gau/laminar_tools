@@ -35,11 +35,11 @@ function DesignMatrix = SetDesignMatLamGlm(NbLayers, Quad)
         DesignMatrix = [ones(NbLayers, 1) DesignMatrix' (DesignMatrix.^2)'];
     end
 
-    DesignMatrix = orthogonalise(DesignMatrix);
+    DesignMatrix = Orthogonalise(DesignMatrix);
 
 end
 
-function X = orthogonalise(X, OPT)
+function X = Orthogonalise(X, OPT)
     % Recursive Gram-Schmidt orthogonalisation of basis functions
     % FORMAT X = orthogonalise(X,OPT)
     %

@@ -2,12 +2,9 @@
 
 function PlotProfileAndBetas(Opt)
 
-    Opt = CheckProfilePlottingOptions(Opt);
+    Opt = SetProfilePlotParameters(Opt);
 
-    figure('Name', Opt.Title, ...
-           'Position', Opt.FigDim);
-
-    SetFigureDefaults(Opt);
+    OpenFigure(Opt);
 
     for iColumn = 1:size(Opt.Specific, 2)
 

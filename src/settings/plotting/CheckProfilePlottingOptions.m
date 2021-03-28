@@ -2,16 +2,11 @@
 
 function Opt = CheckProfilePlottingOptions(Opt)
 
-    [~, ~, Opt] = SetPlottingParameters(Opt);
-
     % define subplot grid
     if ~isfield(Opt, 'm')
         Opt.m = size(Opt.Specific, 2);
     end
 
-    if ~isfield(Opt, 'n')
-        Opt.n = 3;
-    end
     if Opt.PlotQuadratic
         Opt.n = Opt.n + 1;
     end
@@ -28,14 +23,6 @@ function Opt = CheckProfilePlottingOptions(Opt)
 
     if Opt.n >= 5
         Opt.FigDim(4) = 1600;
-    end
-
-    if ~isfield(Opt, 'PermutationTest')
-        Opt.PermutationTest.Do = false;
-    end
-
-    if ~isfield(Opt, 'PlotPValue')
-        Opt.PlotPValue = true;
     end
 
     if Opt.PermutationTest.Do

@@ -16,12 +16,12 @@ Opt.IID = true;
 OneRoi(Opt);
 
 %%
-OneRoTwoConditions(Opt)
+OneRoTwoConditions(Opt);
 
 function OneRoi(Opt)
 
     %% Generate data
-    
+
     ROI = 1;
     Cdt = 1;
     Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
@@ -29,7 +29,7 @@ function OneRoi(Opt)
     Data = GenerateSubjectSurfaceDataLaminarProfiles(Opt);
 
     %% Sort and bin data
-    
+
     Opt = SetRasterPlotParameters(Opt);
 
     SortingData = Data;
@@ -40,13 +40,13 @@ function OneRoi(Opt)
     SortingData = BinRaster(SortingData);
 
     %% Plot
-    
+
     Opt.Title = 'Raster - One ROI - One Condition';
-    
+
     figure('name', Opt.Title, 'position', Opt.FigDim);
 
     SetFigureDefaults(Opt);
-    
+
     MAX = GetAbsMax(cat(1, Data, SortingData));
     CLIM = [-MAX MAX];
 
@@ -64,7 +64,7 @@ end
 
 function OneRoTwoConditions(Opt)
 
-     %% Generate data
+    %% Generate data
 
     % TODO
     % Generating correlated conditions will require tweaking the
@@ -84,22 +84,22 @@ function OneRoTwoConditions(Opt)
     %% Sort and bin data
 
     NbBin = 500;
-    
+
     Opt = SetRasterPlotParameters(Opt);
-    
+
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, 'Cst');
 
     Data = BinRaster(Data, NbBin);
     SortingData = BinRaster(SortingData, NbBin);
 
     %% Plot
-    
+
     Opt.Title = 'Raster - One ROI - With Condition';
 
     figure('name', Opt.Title, 'position', Opt.FigDim);
 
     SetFigureDefaults(Opt);
-    
+
     MAX = GetAbsMax(cat(1, Data, SortingData));
     CLIM = [-MAX MAX];
 

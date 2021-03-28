@@ -7,13 +7,10 @@ function Opt = SetProfilePlotParameters(Opt)
     Opt = SetDefaultFields(Opt, GetProfilePlotDefaults());
 
     for i = 1:size(Opt.Specific, 2)
-        if ~isfield(Opt.Specific{1, i}, 'PlotMinMaxType') || ...
-                isempty(Opt.Specific{1, i}.PlotMinMaxType)
-            Opt.Specific{1, i}.PlotMinMaxType = 'group'; % all group groupallcolumns
-        end
-        Opt.Specific{1, i}.IsMvpa = false;
-        Opt.Specific{1, i}.Ttest.SideOfTtest = 'both';
-        Opt.Specific{1, i}.PlotSubjects = true;
+
+        Opt.Specific{1, i} = SetDefaultFields(Opt.Specific{1, i}, ...
+                                              GetSpecificDefaults());
+
     end
 
     if isfield(Opt, 'IsDifferencePlot') && Opt.IsDifferencePlot
@@ -30,18 +27,35 @@ function Opt = SetProfilePlotParameters(Opt)
         Opt.Specific{1, 2}.PlotMinMaxType = 'all';
     end
 
+    Opt = CheckProfilePlottingOptions(Opt);
+
 end
 
 function ProfilePlotDefaults = GetProfilePlotDefaults()
-    
+
     ProfilePlotDefaults.PlotPValue = true;
-    ProfilePlotDefaults.PermutationTest.Do = true;
+    ProfilePlotDefaults.PermutationTest.Do = false;
     ProfilePlotDefaults.PermutationTest.Plot = false;
-    
+
     ProfilePlotDefaults.PlotQuadratic = false;
-    
+
     ProfilePlotDefaults.PerformDeconvolution = true;
-    
+
     ProfilePlotDefaults.ShadedErrorBar = false;
-    
+
+    ProfilePlotDefaults.n = 3;
+
+end
+
+function SpecificDefaults = GetSpecificDefaults()
+
+    SpecificDefaults.IsMvpa = false;
+    SpecificDefaults.Ttest.SideOfTtest = 'both';
+    SpecificDefaults.PlotSubjects = true;
+
+    % all group groupallcolumns
+    SpecificDefaults.PlotMinMaxType = 'group';
+
+    SpecificDefaults.ConditionVec = 1;
+    SpecificDefaults.RoiVec = 1;
 end

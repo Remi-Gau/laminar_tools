@@ -23,7 +23,7 @@ function structure = SetDefaultFields(structure, fieldsToSet)
 
         else
 
-            structure = setFieldToIfNotPresent( ...
+            structure = SetFieldToIfNotPresent( ...
                                                structure, ...
                                                names{i}, ...
                                                thisField);
@@ -35,7 +35,7 @@ function structure = SetDefaultFields(structure, fieldsToSet)
 
 end
 
-function structure = setFieldToIfNotPresent(structure, fieldName, value)
+function structure = SetFieldToIfNotPresent(structure, fieldName, value)
     if ~isfield(structure, fieldName)
         structure.(fieldName) = value;
     end
