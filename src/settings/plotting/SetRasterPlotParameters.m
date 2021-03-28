@@ -18,7 +18,7 @@ function RasterDefaults = GetRasterDefaults()
 
     % FWHM for smotthing "across vertices"
     % proportion of tne number of vertices
-    RasterDefaults.Raster.VerticalFWHM = 1 / 500;
+    RasterDefaults.Raster.VerticalFWHM = 1 / 1000;
 
     RasterDefaults.Raster.ColorMap = SeismicColorMap(1000);
 

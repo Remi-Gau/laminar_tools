@@ -16,18 +16,7 @@ function  PlotGroupProfile(Opt, iColumn)
     hold on;
     grid off;
 
-    %% Baseline
-    Baseline = [0, 0];
-
-    IsMvpa = false;
-    if isfield(Opt.Specific{1, iColumn}, 'IsMvpa')
-        IsMvpa = Opt.Specific{1, iColumn}.IsMvpa;
-    end
-
-    if IsMvpa
-        Baseline = [0.5, 0.5];
-    end
-    plot([0, Opt.NbLayers + 0.5], Baseline, '-k', 'LineWidth', 1);
+    IsMvpa = PlotBaseline(Opt, iColumn);
 
     RoiVec = Opt.Specific{1, iColumn}.Group.RoiVec;
     ConditionVec = Opt.Specific{1, iColumn}.Group.ConditionVec;

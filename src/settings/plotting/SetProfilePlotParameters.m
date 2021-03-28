@@ -58,4 +58,7 @@ function SpecificDefaults = GetSpecificDefaults()
 
     SpecificDefaults.ConditionVec = 1;
     SpecificDefaults.RoiVec = 1;
+
+    SpecificDefaults.LineColors = RoiColors();
+
 end

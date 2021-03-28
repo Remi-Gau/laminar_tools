@@ -80,15 +80,22 @@ function AddProfileToRaster(Data, Opt)
 
         hold on;
 
+        PlotBaseline(Opt, 1);
+
         GroupMean = mean(Data);
         [LowerError, UpperError] = ComputeDispersionIndex(Data, Opt);
 
         xOffset = -0.5;
         iLine = 1;
         PlotMainProfile(GroupMean, LowerError, UpperError, Opt, xOffset, iLine);
-        set(gca, 'color', 'none', ...
+        set(gca, ...
+            'color', 'none', ...
             'YAxisLocation', 'right', ...
             'xTick', []);
+
+        % to center on grpaph below.
+        ax = axis;
+        axis(gca, [0, Opt.NbLayers, ax(3), ax(4)]);
 
     end
 
