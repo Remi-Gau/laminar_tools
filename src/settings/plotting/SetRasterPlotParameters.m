@@ -31,5 +31,7 @@ function RasterDefaults = GetRasterDefaults()
 
     RasterDefaults.Raster.AddXLabel = false;
     RasterDefaults.Raster.AddXTickLabel = false;
+    
+    RasterDefaults.Raster.AddRectangleXTickLabel = true;
 
 end

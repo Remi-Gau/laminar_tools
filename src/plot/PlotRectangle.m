@@ -1,6 +1,6 @@
 % (C) Copyright 2020 Remi Gau
 
-function PlotRectangle(Opt, PrintDepthLabel)
+function PlotRectangle(Opt, PrintDepthLabel, PrintTickLabel)
 
     if nargin < 1 || isempty(Opt)
         Opt.Fontsize = 8;
@@ -8,6 +8,10 @@ function PlotRectangle(Opt, PrintDepthLabel)
 
     if nargin < 2 || isempty(PrintDepthLabel)
         PrintDepthLabel = true;
+    end
+    
+    if nargin < 3 || isempty(PrintTickLabel)
+        PrintTickLabel = true;
     end
 
     COLOR_LAYERS = LayerColors();
@@ -43,11 +47,19 @@ function PlotRectangle(Opt, PrintDepthLabel)
 
     axis([0, 0.9, 0, 1]);
 
+    if PrintTickLabel
+        XTick = [0 0.45 .9];
+        XTickLabel = {'WM|     ' 'GM' '     |CSF'};
+    else
+        XTick = [];
+        XTickLabel = [];
+    end
+    
     set(gca, ...
         'color', 'none', ...
         'tickdir', 'out', ...
-        'xtick', [0 0.45 .9], ...
-        'xticklabel',  {'WM|     ' 'GM' '     |CSF'}, ...
+        'xtick', XTick, ...
+        'xticklabel', XTickLabel, ...
         'ytick', [], ...
         'yticklabel', [], ...
         'ticklength', [0.0001 0], ...

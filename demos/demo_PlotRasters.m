@@ -50,12 +50,14 @@ function OneRoi(Opt)
     MAX = GetAbsMax(cat(1, Data, SortingData));
     CLIM = [-MAX MAX];
 
-    subplot(121);
+    subplot(1, 10, 1);
     Opt.Raster.Title = 'ROI 1 - Sorting condition';
+    Opt.Raster.AddRectangleXTickLabel =  false;
     PlotOneRaster(mean(SortingData, 3), Opt, CLIM);
-
-    subplot(122);
+    
+    subplot(1, 10, 2:9);
     Opt.Raster.Title = 'ROI 1 - Sorted condition';
+    Opt.Raster.AddRectangleXTickLabel =  true;
     Opt.Specific{1, 1}.ProfileLine.LineWidth = 1;
     Opt.Specific{1, 1}.ProfileLine.MarkerSize = 6;
     Opt.Raster.AddProfile = true;

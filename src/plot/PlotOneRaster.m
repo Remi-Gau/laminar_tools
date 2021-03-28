@@ -5,7 +5,7 @@ function PlotOneRaster(Data, Opt, CLIM)
     set(gca, 'xtick', [], 'ytick', []);
 
     ax = gca;
-    PlotRectangle(Opt, false);
+    PlotRectangle(Opt, false, Opt.Raster.AddRectangleXTickLabel);
     axes('Position', ax.Position);
 
     Data = imgaussfilt(Data,  [size(Data, 1) * Opt.Raster.VerticalFWHM  .001]);
