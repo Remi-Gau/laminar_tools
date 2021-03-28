@@ -30,7 +30,7 @@ function OneRoi(Opt)
 
     %% Sort and bin data
     
-    Opt = GetRasterDefaults(Opt);
+    Opt = SetRasterPlotParameters(Opt);
 
     SortingData = Data;
 
@@ -85,7 +85,7 @@ function OneRoTwoConditions(Opt)
 
     NbBin = 500;
     
-    Opt = GetRasterDefaults(Opt);
+    Opt = SetRasterPlotParameters(Opt);
     
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, 'Cst');
 

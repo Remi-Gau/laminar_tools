@@ -1,6 +1,6 @@
 % (C) Copyright 2020 Remi Gau
 
-function ProfileLine = GetProfileLinePlotParameters()
+function ProfileLine = SetProfileLineParameters()
 
     ProfileLine.LineColor = 'k';
     ProfileLine.LineWidth = 3;

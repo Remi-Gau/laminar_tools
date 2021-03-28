@@ -2,7 +2,7 @@
 
 function Opt = CheckProfilePlottingOptions(Opt)
 
-    [~, ~, Opt] = GetPlottingDefaults(Opt);
+    [~, ~, Opt] = SetPlottingParameters(Opt);
 
     % define subplot grid
     if ~isfield(Opt, 'm')

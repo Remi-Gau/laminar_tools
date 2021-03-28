@@ -1,18 +1,10 @@
 % (C) Copyright 2021 Remi Gau
 
-function Opt = SetProfilePlottingOptions(Opt)
+function Opt = SetProfilePlotParameters(Opt)
 
-    [~, ~, Opt] = GetPlottingDefaults(Opt);
+    [~, ~, Opt] = SetPlottingParameters(Opt);
 
-    Opt.PlotPValue = true;
-    Opt.PermutationTest.Do = true;
-    Opt.PermutationTest.Plot = false;
-
-    Opt.PlotQuadratic = false;
-
-    Opt.PerformDeconvolution = true;
-
-    Opt.ShadedErrorBar = false;
+    Opt = SetDefaultFields(Opt, GetProfilePlotDefaults());
 
     for i = 1:size(Opt.Specific, 2)
         if ~isfield(Opt.Specific{1, i}, 'PlotMinMaxType') || ...
@@ -38,4 +30,18 @@ function Opt = SetProfilePlottingOptions(Opt)
         Opt.Specific{1, 2}.PlotMinMaxType = 'all';
     end
 
+end
+
+function ProfilePlotDefaults = GetProfilePlotDefaults()
+    
+    ProfilePlotDefaults.PlotPValue = true;
+    ProfilePlotDefaults.PermutationTest.Do = true;
+    ProfilePlotDefaults.PermutationTest.Plot = false;
+    
+    ProfilePlotDefaults.PlotQuadratic = false;
+    
+    ProfilePlotDefaults.PerformDeconvolution = true;
+    
+    ProfilePlotDefaults.ShadedErrorBar = false;
+    
 end
