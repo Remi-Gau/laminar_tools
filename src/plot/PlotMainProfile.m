@@ -5,7 +5,7 @@ function PlotMainProfile(GroupMean, LowerError, UpperError, Opt, xOffset, iColum
     % Plots the laminar profile for BOLD or MVPA
     %
 
-    ProfileLine = SetProfileLineParameters();
+    ProfileLine = Opt.Specific{1, iColumn}.ProfileLine;
 
     if exist('iLine', 'var') && ~isempty(iLine)
         ProfileLine.MarkerFaceColor = Opt.Specific{1, iColumn}.LineColors(iLine, :);

@@ -37,10 +37,10 @@ function  PlotGroupProfile(Opt, iColumn)
 
             Data = Opt.Specific{1, iColumn}.Group.Data(RowsToSelect, :);
 
+            PlotProfileSubjects(Data, Opt.NbLayers, Opt.Specific{1, iColumn}.PlotSubjects);
+
             GroupMean = mean(Data);
             [LowerError, UpperError] = ComputeDispersionIndex(Data, Opt);
-
-            PlotProfileSubjects(Data, Opt.NbLayers, Opt.Specific{1, iColumn}.PlotSubjects);
 
             xOffset = (iLine - 1) * 0.1;
             PlotMainProfile(GroupMean, LowerError, UpperError, Opt, xOffset, iColumn, iLine);

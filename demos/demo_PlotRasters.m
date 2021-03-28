@@ -56,6 +56,8 @@ function OneRoi(Opt)
 
     subplot(122);
     Opt.Raster.Title = 'ROI 1 - Sorted condition';
+    Opt.Specific{1, 1}.ProfileLine.LineWidth = 1;
+    Opt.Specific{1, 1}.ProfileLine.MarkerSize = 6;
     Opt.Raster.AddProfile = true;
     Opt.Raster.AddColorBar = true;
     PlotOneRaster(mean(Data, 3), Opt, CLIM);

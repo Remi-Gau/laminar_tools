@@ -61,4 +61,19 @@ function SpecificDefaults = GetSpecificDefaults()
 
     SpecificDefaults.LineColors = RoiColors();
 
+    SpecificDefaults.ProfileLine = GetProfileLineDefaults();
+
+end
+
+function ProfileLineDefaults = GetProfileLineDefaults()
+
+    ProfileLineDefaults.LineColor = 'k';
+    ProfileLineDefaults.LineWidth = 3;
+    ProfileLineDefaults.ErrorLineWidth = 2;
+    ProfileLineDefaults.LineStyle = '-';
+    ProfileLineDefaults.Marker = 'o';
+    ProfileLineDefaults.MarkerSize = 8;
+    ProfileLineDefaults.MarkerFaceColor = ProfileLineDefaults.LineColor;
+    ProfileLineDefaults.Transparent = true;
+
 end
