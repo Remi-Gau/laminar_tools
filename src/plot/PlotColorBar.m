@@ -8,8 +8,8 @@ function PlotColorBar(Opt, CLIM)
 
         ax = gca;
         axPos = ax.Position;
-        axPos(1) = axPos(1) + axPos(3) + .03;
-        axPos(3) = .01;
+        axPos(1) = axPos(1) + axPos(3) + .04;
+        axPos(3) = .015;
         axes('Position', axPos);
 
         colormap(Opt.Raster.ColorMap);

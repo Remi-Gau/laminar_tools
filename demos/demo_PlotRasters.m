@@ -12,90 +12,105 @@ Opt.NbVertices = 1000;
 % use iid data across layer or add some layer error covariance
 Opt.IID = true;
 
-% FWHM for smotthing "across vertices"
-% proportion of tne number of vertices
-Opt.Raster.VerticalFWHM = 1 / 500;
-Opt.Raster.ColorMap = SeismicColorMap(1000);
-Opt.Raster.AddXLabel = true;
-
-Opt.Raster.Sort = true;
-Opt.Raster.CrossValidate = true;
-
 %%
-OneRoi(Opt)
+OneRoi(Opt);
 
 %%
 OneRoTwoConditions(Opt)
 
 function OneRoi(Opt)
 
+    %% Generate data
+    
     ROI = 1;
     Cdt = 1;
     Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
     Opt.StdDevWithinSubject = Opt.Betas(1) * 15;
     Data = GenerateSubjectSurfaceDataLaminarProfiles(Opt);
+
+    %% Sort and bin data
     
+    Opt = GetRasterDefaults(Opt);
+
     SortingData = Data;
-    
+
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, 'Cst');
-    
+
     Data = BinRaster(Data);
     SortingData = BinRaster(SortingData);
+
+    %% Plot
     
-    [~, ~, Opt] = GetPlottingDefaults(Opt);
+    Opt.Title = 'Raster - One ROI - One Condition';
     
-    figure
+    figure('name', Opt.Title, 'position', Opt.FigDim);
+
+    SetFigureDefaults(Opt);
     
+    MAX = GetAbsMax(cat(1, Data, SortingData));
+    CLIM = [-MAX MAX];
+
     subplot(121);
-    Opt.Title = 'ROI 1 - Sorting condition';
-    PlotOneRaster(mean(SortingData, 3), Opt);
-    
+    Opt.Raster.Title = 'ROI 1 - Sorting condition';
+    PlotOneRaster(mean(SortingData, 3), Opt, CLIM);
+
     subplot(122);
-    Opt.Title = 'ROI 1 - Sorted condition';
+    Opt.Raster.Title = 'ROI 1 - Sorted condition';
+    Opt.Raster.AddProfile = true;
     Opt.Raster.AddColorBar = true;
-    PlotOneRaster(mean(Data, 3), Opt);
-    
+    PlotOneRaster(mean(Data, 3), Opt, CLIM);
+
 end
 
-
 function OneRoTwoConditions(Opt)
-    
-    %% bin data
-    %     IdxToAvg = floor(linspace(1, numel(X_sort), NbBin + 1));
-    
-    NbBin = 500;
-    
+
+     %% Generate data
+
     % TODO
     % Generating correlated conditions will require tweaking the
     % variance-covariance matrix used to generate data with
     % MVNRND
-    
+
     ROI = 1;
     Cdt = 1;
     Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
     Data = GenerateSubjectSurfaceDataLaminarProfiles(Opt);
-    
+
     ROI = 1;
     Cdt = 2;
     Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
     SortingData = GenerateSubjectSurfaceDataLaminarProfiles(Opt);
+
+    %% Sort and bin data
+
+    NbBin = 500;
+    
+    Opt = GetRasterDefaults(Opt);
     
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, 'Cst');
-    
+
     Data = BinRaster(Data, NbBin);
     SortingData = BinRaster(SortingData, NbBin);
+
+    %% Plot
     
-    [~, ~, Opt] = GetPlottingDefaults(Opt);
+    Opt.Title = 'Raster - One ROI - With Condition';
+
+    figure('name', Opt.Title, 'position', Opt.FigDim);
+
+    SetFigureDefaults(Opt);
     
-    figure
-    
+    MAX = GetAbsMax(cat(1, Data, SortingData));
+    CLIM = [-MAX MAX];
+
     subplot(121);
-    Opt.Title = 'ROI 1 - Sorting condition';
-    PlotOneRaster(mean(SortingData, 3), Opt);
-    
+    Opt.Raster.Title = 'ROI 1 - Sorting condition';
+    PlotOneRaster(mean(SortingData, 3), Opt, CLIM);
+
     subplot(122);
-    Opt.Title = 'ROI 1 - Sorted condition';
+    Opt.Raster.Title = 'ROI 1 - Sorted condition';
+    Opt.Raster.AddProfile = true;
     Opt.Raster.AddColorBar = true;
-    PlotOneRaster(mean(Data, 3), Opt);
-    
+    PlotOneRaster(mean(Data, 3), Opt, CLIM);
+
 end

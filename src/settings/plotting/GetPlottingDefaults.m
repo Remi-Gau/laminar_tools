@@ -16,8 +16,6 @@ function  [NbLayers, AverageType, Opt] = GetPlottingDefaults(Opt)
 
     Opt.FigDim = [50, 50, 600, 600];
 
-    Opt.Raster.AddColorBar = false;
-
     if ~isfield(Opt, 'Title')
         Opt.Title = '';
     end
