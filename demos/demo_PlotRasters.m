@@ -1,22 +1,32 @@
-%% (C) Copyright 2020 Remi Gau
+% (C) Copyright 2020 Remi Gau
 
 clear;
 close all;
 clc;
 
-Opt.NbSubject = 1;
 Opt.NbRuns = 20;
 Opt.NbLayers = 6;
-Opt.NbVertices = 1000;
 
-% use iid data across layer or add some layer error covariance
+% use iid data across layer
+% or add some layer error covariance
 Opt.IID = true;
 
-%%
-OneRoi(Opt);
+%% demos with one subject
+Opt.NbSubject = 1;
+Opt.NbVertices = 1000;
 
-%%
-OneRoTwoConditions(Opt);
+% OneRoi(Opt);
+% OneRoiTwoConditions(Opt);
+
+%% demos with one subject
+Opt.NbSubject = 20;
+
+% determine range of vertices
+% that will be given to each subject [Min Max]
+Opt.NbVerticesRange = [1000 2000];
+
+GroupOneRoi(Opt);
+GroupOneRoi2Conditions(Opt);
 
 function OneRoi(Opt)
 
@@ -25,19 +35,19 @@ function OneRoi(Opt)
     ROI = 1;
     Cdt = 1;
     Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
-    Opt.StdDevWithinSubject = Opt.Betas(1) * 15;
-    Data = GenerateSubjectSurfaceDataLaminarProfiles(Opt);
+    Data = GenerateSubjectSurfaceDataRaster(Opt);
 
     %% Sort and bin data
+
+    SortBy = 'Cst';
 
     Opt = SetRasterPlotParameters(Opt);
 
     SortingData = Data;
 
-    [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, 'Cst');
+    [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
 
     Data = BinRaster(Data);
-    SortingData = BinRaster(SortingData);
 
     %% Plot
 
@@ -47,26 +57,28 @@ function OneRoi(Opt)
 
     SetFigureDefaults(Opt);
 
-    MAX = GetAbsMax(cat(1, Data, SortingData));
+    MAX = GetAbsMax(Data);
     CLIM = [-MAX MAX];
 
     subplot(1, 10, 1);
     Opt.Raster.Title = 'ROI 1 - Sorting condition';
     Opt.Raster.AddRectangleXTickLabel =  false;
-    PlotOneRaster(mean(SortingData, 3), Opt, CLIM);
-    
+    PlotOneRaster(SortingData, Opt, CLIM);
+
     subplot(1, 10, 2:9);
     Opt.Raster.Title = 'ROI 1 - Sorted condition';
     Opt.Raster.AddRectangleXTickLabel =  true;
+
+    Opt.Raster.AddProfile = true;
     Opt.Specific{1, 1}.ProfileLine.LineWidth = 1;
     Opt.Specific{1, 1}.ProfileLine.MarkerSize = 6;
-    Opt.Raster.AddProfile = true;
+
     Opt.Raster.AddColorBar = true;
-    PlotOneRaster(mean(Data, 3), Opt, CLIM);
+    PlotOneRaster(Data, Opt, CLIM);
 
 end
 
-function OneRoTwoConditions(Opt)
+function OneRoiTwoConditions(Opt)
 
     %% Generate data
 
@@ -78,20 +90,22 @@ function OneRoTwoConditions(Opt)
     ROI = 1;
     Cdt = 1;
     Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
-    Data = GenerateSubjectSurfaceDataLaminarProfiles(Opt);
+    Data = GenerateSubjectSurfaceDataRaster(Opt);
 
     ROI = 1;
     Cdt = 2;
     Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
-    SortingData = GenerateSubjectSurfaceDataLaminarProfiles(Opt);
+    SortingData = GenerateSubjectSurfaceDataRaster(Opt);
 
     %% Sort and bin data
+
+    SortBy = 'Cst';
 
     NbBin = 500;
 
     Opt = SetRasterPlotParameters(Opt);
 
-    [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, 'Cst');
+    [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
 
     Data = BinRaster(Data, NbBin);
     SortingData = BinRaster(SortingData, NbBin);
@@ -104,17 +118,142 @@ function OneRoTwoConditions(Opt)
 
     SetFigureDefaults(Opt);
 
-    MAX = GetAbsMax(cat(1, Data, SortingData));
+    MAX = GetAbsMax(Data);
     CLIM = [-MAX MAX];
 
     subplot(121);
     Opt.Raster.Title = 'ROI 1 - Sorting condition';
-    PlotOneRaster(mean(SortingData, 3), Opt, CLIM);
+    PlotOneRaster(SortingData, Opt, CLIM);
 
     subplot(122);
     Opt.Raster.Title = 'ROI 1 - Sorted condition';
     Opt.Raster.AddProfile = true;
     Opt.Raster.AddColorBar = true;
-    PlotOneRaster(mean(Data, 3), Opt, CLIM);
+    PlotOneRaster(Data, Opt, CLIM);
+
+end
+
+function GroupOneRoi(Opt)
+
+    %% Generate data
+
+    Opt = GenerateNumberVertexForSubject(Opt);
+
+    ROI = 1;
+    Cdt = 1;
+    Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
+    Data = GenerateGroupSurfaceDataRaster(Opt);
+
+    %% Sort and bin data
+
+    SortBy = 'Cst';
+
+    Opt = SetRasterPlotParameters(Opt);
+
+    SortingData = Data;
+
+    [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
+
+    Data = BinRaster(Data);
+    SortingData = BinRaster(SortingData);
+
+    %% Plot
+
+    Opt.Title = 'Group Raster - One ROI - One Condition';
+
+    figure('name', Opt.Title, 'position', Opt.FigDim);
+
+    SetFigureDefaults(Opt);
+
+    Profiles = mean(Data, 1);
+    Opt.Raster.Profiles = squeeze(Profiles)';
+
+    Data = mean(Data, 3);
+    SortingData = mean(SortingData, 3);
+
+    MAX = GetAbsMax(Data);
+    CLIM = [-MAX MAX];
+
+    subplot(1, 10, 1);
+    Opt.Raster.Title = 'ROI 1 - Sorting condition';
+    Opt.Raster.AddRectangleXTickLabel =  false;
+    PlotOneRaster(SortingData, Opt, CLIM);
+
+    subplot(1, 10, 2:9);
+    Opt.Raster.Title = 'ROI 1 - Sorted condition';
+
+    Opt.Raster.AddRectangleXTickLabel =  true;
+
+    Opt.Raster.AddProfile = true;
+    Opt.Specific{1, 1}.ProfileLine.LineWidth = 1;
+    Opt.Specific{1, 1}.ProfileLine.MarkerSize = 6;
+
+    Opt.Raster.AddColorBar = true;
+
+    PlotOneRaster(Data, Opt, CLIM);
+
+end
+
+function GroupOneRoi2Conditions(Opt)
+
+    %% Generate data
+
+    Opt = GenerateNumberVertexForSubject(Opt);
+
+    ROI = 1;
+    Cdt = 1;
+    Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
+    Data = GenerateGroupSurfaceDataRaster(Opt);
+
+    ROI = 1;
+    Cdt = 2;
+    Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
+    SortingData = GenerateGroupSurfaceDataRaster(Opt);
+
+    %% Sort and bin data
+
+    SortBy = 'Cst';
+
+    Opt = SetRasterPlotParameters(Opt);
+
+    [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
+
+    Data = BinRaster(Data);
+    SortingData = BinRaster(SortingData);
+
+    %% Plot
+
+    Opt.Title = 'Group Raster - One ROI - 2 Conditions';
+
+    figure('name', Opt.Title, 'position', Opt.FigDim);
+
+    SetFigureDefaults(Opt);
+
+    Profiles = mean(Data, 1);
+    Opt.Raster.Profiles = squeeze(Profiles)';
+
+    Data = mean(Data, 3);
+    SortingData = mean(SortingData, 3);
+
+    MAX = GetAbsMax(Data);
+    CLIM = [-MAX MAX];
+
+    subplot(1, 10, 1);
+    Opt.Raster.Title = 'ROI 1 - Sorting condition';
+    Opt.Raster.AddRectangleXTickLabel =  false;
+    PlotOneRaster(SortingData, Opt, CLIM);
+
+    subplot(1, 10, 2:9);
+    Opt.Raster.Title = 'ROI 1 - Sorted condition';
+
+    Opt.Raster.AddRectangleXTickLabel =  true;
+
+    Opt.Raster.AddProfile = true;
+    Opt.Specific{1, 1}.ProfileLine.LineWidth = 1;
+    Opt.Specific{1, 1}.ProfileLine.MarkerSize = 6;
+
+    Opt.Raster.AddColorBar = true;
+
+    PlotOneRaster(Data, Opt, CLIM);
 
 end

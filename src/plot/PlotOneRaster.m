@@ -82,6 +82,10 @@ function AddProfileToRaster(Data, Opt)
 
         PlotBaseline(Opt, 1);
 
+        if isfield(Opt.Raster, 'Profiles')
+            Data = Opt.Raster.Profiles;
+        end
+
         GroupMean = mean(Data);
         [LowerError, UpperError] = ComputeDispersionIndex(Data, Opt);
 
@@ -93,7 +97,7 @@ function AddProfileToRaster(Data, Opt)
             'YAxisLocation', 'right', ...
             'xTick', []);
 
-        % to center on grpaph below.
+        % to center on graph layer below.
         ax = axis;
         axis(gca, [0, Opt.NbLayers, ax(3), ax(4)]);
 

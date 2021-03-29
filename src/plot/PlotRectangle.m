@@ -9,7 +9,7 @@ function PlotRectangle(Opt, PrintDepthLabel, PrintTickLabel)
     if nargin < 2 || isempty(PrintDepthLabel)
         PrintDepthLabel = true;
     end
-    
+
     if nargin < 3 || isempty(PrintTickLabel)
         PrintTickLabel = true;
     end
@@ -54,7 +54,7 @@ function PlotRectangle(Opt, PrintDepthLabel, PrintTickLabel)
         XTick = [];
         XTickLabel = [];
     end
-    
+
     set(gca, ...
         'color', 'none', ...
         'tickdir', 'out', ...

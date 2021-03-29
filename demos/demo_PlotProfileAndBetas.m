@@ -3,20 +3,20 @@
 clear;
 clc;
 
-OneRoi;
-TwoRois;
-TwoRoisSeveralConditions;
-OneRoiTwoConditionsDifference;
+OptGenData.NbSubject = 100;
+OptGenData.NbRuns = 20;
+OptGenData.NbLayers = 6;
 
-function OneRoi
+OneRoi(OptGenData);
+TwoRois(OptGenData);
+TwoRoisSeveralConditions(OptGenData);
+OneRoiTwoConditionsDifference(OptGenData);
+
+function OneRoi(OptGenData)
 
     close all;
 
     %% Plot one ROI / Condition
-
-    OptGenData.NbSubject = 10;
-    OptGenData.NbRuns = 20;
-    OptGenData.NbLayers = 6;
 
     %%
     [Data, SubjectVec] = GenerateGroupDataROI(OptGenData, 1, 1);
@@ -36,11 +36,7 @@ function OneRoi
 
 end
 
-function TwoRois
-
-    OptGenData.NbSubject = 10;
-    OptGenData.NbRuns = 20;
-    OptGenData.NbLayers = 6;
+function TwoRois(OptGenData)
 
     %%
     [Data1, SubjectVec1] =  GenerateGroupDataROI(OptGenData, 1, 1);
@@ -65,11 +61,7 @@ function TwoRois
 
 end
 
-function TwoRoisSeveralConditions
-
-    OptGenData.NbSubject = 10;
-    OptGenData.NbRuns = 20;
-    OptGenData.NbLayers = 6;
+function TwoRoisSeveralConditions(OptGenData)
 
     %%
     iColumn = 1;
@@ -113,11 +105,7 @@ function TwoRoisSeveralConditions
 
 end
 
-function OneRoiTwoConditionsDifference
-
-    OptGenData.NbSubject = 10;
-    OptGenData.NbRuns = 20;
-    OptGenData.NbLayers = 6;
+function OneRoiTwoConditionsDifference(OptGenData)
 
     Opt.IsDifferencePlot = true();
 

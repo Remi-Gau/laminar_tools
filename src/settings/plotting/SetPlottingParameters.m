@@ -2,7 +2,11 @@
 
 function  [NbLayers, AverageType, Opt] = SetPlottingParameters(Opt)
 
-    Opt = SetDefaultFields(Opt, GetPlottingDefaults());
+    if nargin < 1 || isempty(Opt)
+        Opt = GetPlottingDefaults();
+    else
+        Opt = SetDefaultFields(Opt, GetPlottingDefaults());
+    end
 
     if Opt.PerformDeconvolution
         Opt.Title = [Opt.Title ' - deconvolved'];

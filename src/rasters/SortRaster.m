@@ -7,6 +7,22 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
         return
     end
 
+    % If we are dealing with "group" data
+    % we make loop through each subject
+    % and sort with a recursive to SortRaster
+    if iscell(Data) && iscell(SortingData)
+
+        for iSub = 1:size(Data, 1)
+            [Data{iSub}, SortingData{iSub}, R{iSub}] = SortRaster( ...
+                                                                  Data{iSub}, ...
+                                                                  SortingData{iSub}, ...
+                                                                  Opt, ...
+                                                                  Parameter);
+        end
+
+        return
+    end
+
     Quad = true;
     DesignMatrix = SetDesignMatLamGlm(Opt.NbLayers, Quad);
 
@@ -39,12 +55,21 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
             SortedFolds(iFold) = false;
 
             SortingFoldData = SortingData(:, :, SortingFold);
-            SortedFoldsData = mean(Data(:, :, SortedFolds), 3);
 
-            [DataTemp(:, :, iFold), SortingDataTemp(:, :, iFold), R(iFold)] = Sort(SortedFoldsData, ...
-                                                                                   SortingFoldData, ...
-                                                                                   DesignMatrix, ...
-                                                                                   Keep); %#ok<*AGROW>
+            % Apply the sorting to the left out fold of the data
+            % and sorting data to return both
+            SortedFoldsData = mean(Data(:, :, SortedFolds), 3);
+            [DataTemp(:, :, iFold), R(iFold)] = Sort(SortedFoldsData, ...
+                                                     SortingFoldData, ...
+                                                     DesignMatrix, ...
+                                                     Keep); %#ok<*AGROW>
+
+            SortedFoldsData = mean(SortingData(:, :, SortedFolds), 3);
+
+            [SortingDataTemp(:, :, iFold)] = Sort(SortedFoldsData, ...
+                                                  SortingFoldData, ...
+                                                  DesignMatrix, ...
+                                                  Keep); %#ok<*AGROW>
 
         end
 
@@ -56,7 +81,7 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
 
 end
 
-function [Data, SortingData, R] = Sort(Data, SortingData, DesignMatrix, Keep)
+function [Data, R] = Sort(Data, SortingData, DesignMatrix, Keep)
 
     SortingBeta = RunLaminarGlm(SortingData, DesignMatrix);
     BetaToSort = RunLaminarGlm(Data, DesignMatrix);
@@ -68,7 +93,6 @@ function [Data, SortingData, R] = Sort(Data, SortingData, DesignMatrix, Keep)
 
     [~, Idx] = sort(SortingBeta);
 
-    SortingData = SortingData(Idx, :);
     Data = Data(Idx, :);
 
     R = R(2);
