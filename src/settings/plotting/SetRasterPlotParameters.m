@@ -2,7 +2,7 @@
 
 function  Opt = SetRasterPlotParameters(Opt)
 
-    [~, ~, Opt] = SetPlottingParameters(Opt);
+    Opt = SetPlottingParameters(Opt);
 
     Opt.Specific{1, 1}.LineColors = 'k';
     Opt = SetProfilePlotParameters(Opt);

@@ -26,21 +26,12 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
     Quad = true;
     DesignMatrix = SetDesignMatLamGlm(Opt.NbLayers, Quad);
 
-    switch lower(Parameter)
-        case 'cst'
-            Keep = 1;
-        case 'lin'
-            Keep = 2;
-        case 'quad'
-            Keep = 3;
-    end
-
     if ~Opt.Raster.CrossValidate
 
         SortingData = mean(SortingData, 3);
         Data = mean(Data, 3);
 
-        [Data, SortingData, R] = Sort(Data, SortingData, DesignMatrix, Keep);
+        [Data, SortingData, R] = SortThisRaster(Data, SortingData, DesignMatrix, Opt, Parameter);
 
     else
 
@@ -59,17 +50,19 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
             % Apply the sorting to the left out fold of the data
             % and sorting data to return both
             SortedFoldsData = mean(Data(:, :, SortedFolds), 3);
-            [DataTemp(:, :, iFold), R(iFold)] = Sort(SortedFoldsData, ...
-                                                     SortingFoldData, ...
-                                                     DesignMatrix, ...
-                                                     Keep); %#ok<*AGROW>
+            [DataTemp(:, :, iFold), R(iFold)] = SortThisRaster(SortedFoldsData, ...
+                                                               SortingFoldData, ...
+                                                               Opt, ...
+                                                               DesignMatrix, ...
+                                                               Parameter); %#ok<*AGROW>
 
             SortedFoldsData = mean(SortingData(:, :, SortedFolds), 3);
 
-            [SortingDataTemp(:, :, iFold)] = Sort(SortedFoldsData, ...
-                                                  SortingFoldData, ...
-                                                  DesignMatrix, ...
-                                                  Keep); %#ok<*AGROW>
+            [SortingDataTemp(:, :, iFold)] = SortThisRaster(SortedFoldsData, ...
+                                                            SortingFoldData, ...
+                                                            Opt, ...
+                                                            DesignMatrix, ...
+                                                            Parameter); %#ok<*AGROW>
 
         end
 
@@ -81,7 +74,21 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
 
 end
 
-function [Data, R] = Sort(Data, SortingData, DesignMatrix, Keep)
+function [Data, R] = SortThisRaster(Data, SortingData, Opt, DesignMatrix, Parameter)
+
+    switch lower(Parameter)
+        case 'cst'
+            Keep = 1;
+        case 'lin'
+            Keep = 2;
+        case 'quad'
+            Keep = 3;
+    end
+
+    if Opt.PerformDeconvolution
+        Data = PerfomDeconvolution(Data, Opt.NbLayers);
+        SortingData = PerfomDeconvolution(SortingData, Opt.NbLayers);
+    end
 
     SortingBeta = RunLaminarGlm(SortingData, DesignMatrix);
     BetaToSort = RunLaminarGlm(Data, DesignMatrix);

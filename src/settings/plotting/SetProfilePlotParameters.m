@@ -2,7 +2,7 @@
 
 function Opt = SetProfilePlotParameters(Opt)
 
-    [~, ~, Opt] = SetPlottingParameters(Opt);
+    Opt = SetPlottingParameters(Opt);
 
     Opt = SetDefaultFields(Opt, GetProfilePlotDefaults());
 
