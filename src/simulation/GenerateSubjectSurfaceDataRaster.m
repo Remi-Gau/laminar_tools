@@ -4,6 +4,10 @@ function Data = GenerateSubjectSurfaceDataRaster(Opt, iSubject)
     %
     % generate data to be used for raster plotting
     %
+    
+    if nargin < 2
+        iSubject = 1;
+    end
 
     DesMat = SetDesignMatLamGlm(Opt.NbLayers, true);
 

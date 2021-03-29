@@ -15,8 +15,8 @@ Opt.IID = true;
 Opt.NbSubject = 1;
 Opt.NbVertices = 1000;
 
-% OneRoi(Opt);
-% OneRoiTwoConditions(Opt);
+OneRoi(Opt);
+OneRoiTwoConditions(Opt);
 
 %% demos with one subject
 Opt.NbSubject = 20;
