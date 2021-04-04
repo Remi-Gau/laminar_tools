@@ -1,7 +1,15 @@
 % (C) Copyright 2021 Remi Gau
 
 function RowsToSelect = ReturnRowsToSelect(Criteria)
-
+%
+    % Examples::
+    %
+    %   RowsToSelect = ReturnRowsToSelect({ConditionVec, ConditionToReturn});
+    %
+    %   RowsToSelect = ReturnRowsToSelect( {ConditionVec, ConditionToReturn;
+    %                                       RunVec,       RunToReturn      } );
+    %
+    
     RowsToSelect = [];
 
     for iCriteria = 1:size(Criteria, 1)

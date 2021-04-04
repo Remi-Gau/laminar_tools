@@ -18,10 +18,19 @@ function RasterDefaults = GetRasterDefaults()
 
     % FWHM for smotthing "across vertices"
     % proportion of tne number of vertices
-    RasterDefaults.Raster.VerticalFWHM = 1 / 1000;
+    RasterDefaults.Raster.VerticalFWHM = 1 / 10000;
 
-    RasterDefaults.Raster.ColorMap = SeismicColorMap(1000);
-
+    % if we have CPP_SPM with as dependency 
+    % we use a clean blue to red color map
+    % otherwise we go for a more flashy seismic colormap
+    try
+        color_map_folder = fullfile(fileparts(which('map_luminance')), '..', 'mat_maps');
+        load(fullfile(color_map_folder, 'diverging_bwr_iso.mat'));
+        RasterDefaults.Raster.ColorMap = diverging_bwr;
+    catch
+        RasterDefaults.Raster.ColorMap = SeismicColorMap(1000);
+    end
+    
     RasterDefaults.Raster.Sort = true;
     RasterDefaults.Raster.CrossValidate = true;
 
