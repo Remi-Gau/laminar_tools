@@ -91,10 +91,10 @@ function AddProfileToRaster(Data, Opt)
 
         xOffset = -0.5;
         iLine = 1;
-        
+
         Opt.Specific{1}.ProfileLine.LineWidth = Opt.Raster.Profile.LineWidth;
         Opt.Specific{1}.ProfileLine.MarkerSize = Opt.Raster.Profile.MarkerSize;
-        
+
         PlotMainProfile(GroupMean, LowerError, UpperError, Opt, xOffset, iLine);
         set(gca, ...
             'color', 'none', ...

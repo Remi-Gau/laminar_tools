@@ -20,7 +20,7 @@ function RasterDefaults = GetRasterDefaults()
     % proportion of tne number of vertices
     RasterDefaults.Raster.VerticalFWHM = 1 / 10000;
 
-    % if we have CPP_SPM with as dependency 
+    % if we have CPP_SPM with as dependency
     % we use a clean blue to red color map
     % otherwise we go for a more flashy seismic colormap
     try
@@ -30,13 +30,13 @@ function RasterDefaults = GetRasterDefaults()
     catch
         RasterDefaults.Raster.ColorMap = SeismicColorMap(1000);
     end
-    
+
     RasterDefaults.Raster.Sort = true;
     RasterDefaults.Raster.CrossValidate = true;
 
     RasterDefaults.Raster.AddProfile = false;
     RasterDefaults.Raster.Profile.LineWidth = 0.5;
-    RasterDefaults.Raster.Profile.MarkerSize = 3;    
+    RasterDefaults.Raster.Profile.MarkerSize = 3;
 
     RasterDefaults.Raster.AddColorBar = false;
 
