@@ -22,7 +22,7 @@ function RasterDefaults = GetRasterDefaults()
 
     % FWHM for smotthing "across vertices"
     % proportion of tne number of vertices
-    RasterDefaults.Raster.VerticalFWHM = 1 / 10000;
+    RasterDefaults.Raster.VerticalFWHM = 1 / 100;
 
     % if we have CPP_SPM with as dependency
     % we use a clean blue to red color map
@@ -35,9 +35,12 @@ function RasterDefaults = GetRasterDefaults()
         RasterDefaults.Raster.ColorMap = SeismicColorMap(1000);
     end
 
+    
     RasterDefaults.Raster.Sort = true;
     RasterDefaults.Raster.CrossValidate = true;
 
+    RasterDefaults.Raster.PlotRValue = true;
+    
     RasterDefaults.Raster.AddProfile = false;
     RasterDefaults.Raster.Profile.LineWidth = 0.5;
     RasterDefaults.Raster.Profile.MarkerSize = 3;

@@ -1,16 +1,14 @@
 % (C) Copyright 2020 Remi Gau
 
-function PlotOneRaster(Data, Opt, CLIM)
+function PlotOneRaster(Data, Opt, R, CLIM)
     
     set(gca, 'xtick', [], 'ytick', []);
     
     ax = gca;
     PlotRectangle(Opt, false, Opt.Raster.AddRectangleXTickLabel);
     axes('Position', ax.Position);
-    
-    Data = imgaussfilt(Data,  [size(Data, 1) * Opt.Raster.VerticalFWHM  .001]);
-    
-    if nargin < 3
+
+    if nargin < 4
         % use symmetrical scale by default
         MAX = GetAbsMax(Data);
         CLIM = [-MAX MAX];
@@ -38,6 +36,11 @@ function PlotOneRaster(Data, Opt, CLIM)
         'yticklabel', [], ...
         'ticklength', [0.01 0], ...
         'fontsize', Opt.Fontsize);
+    
+    if nargin < 3
+        R = [];
+    end
+    PrintR(R, Opt)
     
     AddProfileToRaster(Data, Opt);
     
@@ -85,7 +88,7 @@ function AddProfileToRaster(Data, Opt)
         if isfield(Opt.Raster, 'Profiles')
             % liekly we are dealing with between subject data
             Data = Opt.Raster.Profiles;
-            GroupMean = mean(Data);
+            CentralTendency = mean(Data);
             
             if ~isfield(Opt.Specific{1}, 'Group')
                 Opt.Specific{1}.Group.Min = min(Data(:));
@@ -97,9 +100,9 @@ function AddProfileToRaster(Data, Opt)
             % of a single subject
             switch Opt.AverageType
                 case 'median'
-                    GroupMean = median(Data);
+                    CentralTendency = median(Data);
                 case 'mean'
-                    GroupMean = mean(Data);
+                    CentralTendency = mean(Data);
             end
         end
         
@@ -114,7 +117,7 @@ function AddProfileToRaster(Data, Opt)
         Opt.Specific{1}.ProfileLine.LineWidth = Opt.Raster.Profile.LineWidth;
         Opt.Specific{1}.ProfileLine.MarkerSize = Opt.Raster.Profile.MarkerSize;
         
-        PlotMainProfile(GroupMean, LowerError, UpperError, Opt, xOffset, iLine);
+        PlotMainProfile(CentralTendency, LowerError, UpperError, Opt, xOffset, iLine);
         set(gca, ...
             'color', 'none', ...
             'YAxisLocation', 'right', ...

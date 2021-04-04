@@ -15,8 +15,8 @@ Opt.IID = false;
 Opt.NbSubject = 1;
 Opt.NbVertices = 1000;
 
-% OneRoi(Opt);
-% OneRoiTwoConditions(Opt);
+OneRoi(Opt);
+OneRoiTwoConditions(Opt);
 
 %% demos with one group
 Opt.NbSubject = 10;
@@ -25,8 +25,8 @@ Opt.NbSubject = 10;
 % that will be given to each subject [Min Max]
 Opt.NbVerticesRange = [1000 2000];
 
-% GroupOneRoi(Opt);
-% GroupOneRoi2Conditions(Opt);
+GroupOneRoi(Opt);
+GroupOneRoi2Conditions(Opt);
 Group2By2(Opt);
 
 function OneRoi(Opt)
@@ -49,6 +49,8 @@ function OneRoi(Opt)
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
 
     Data = BinRaster(Data);
+    
+    Data = SmoothRaster(Data, Opt);
 
     %% Plot
 
@@ -63,17 +65,17 @@ function OneRoi(Opt)
 
     subplot(1, 10, 1);
     Opt.Raster.Title = 'ROI 1 - Sorting condition';
+    Opt.Raster.PlotRValue = false;
     Opt.Raster.AddRectangleXTickLabel =  false;
-    PlotOneRaster(SortingData, Opt, CLIM);
+    PlotOneRaster(SortingData, Opt, [], CLIM);
 
     subplot(1, 10, 2:9);
     Opt.Raster.Title = 'ROI 1 - Sorted condition';
     Opt.Raster.AddRectangleXTickLabel =  true;
-
+    Opt.Raster.PlotRValue = true;
     Opt.Raster.AddProfile = true;
-
     Opt.Raster.AddColorBar = true;
-    PlotOneRaster(Data, Opt, CLIM);
+    PlotOneRaster(SortingData, Opt, R, CLIM);
 
 end
 
@@ -107,7 +109,10 @@ function OneRoiTwoConditions(Opt)
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
 
     Data = BinRaster(Data, NbBin);
+    Data = SmoothRaster(Data, Opt);
+    
     SortingData = BinRaster(SortingData, NbBin);
+    SortingData = SmoothRaster(SortingData, Opt);
 
     %% Plot
 
@@ -122,13 +127,13 @@ function OneRoiTwoConditions(Opt)
 
     subplot(121);
     Opt.Raster.Title = 'ROI 1 - Sorting condition';
-    PlotOneRaster(SortingData, Opt, CLIM);
+    PlotOneRaster(SortingData, Opt, [], CLIM);
 
     subplot(122);
     Opt.Raster.Title = 'ROI 1 - Sorted condition';
     Opt.Raster.AddProfile = true;
     Opt.Raster.AddColorBar = true;
-    PlotOneRaster(Data, Opt, CLIM);
+    PlotOneRaster(SortingData, Opt, R, CLIM);
 
 end
 
@@ -154,7 +159,10 @@ function GroupOneRoi(Opt)
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
 
     Data = BinRaster(Data);
+    Data = SmoothRaster(Data, Opt);
+    
     SortingData = BinRaster(SortingData);
+    SortingData = SmoothRaster(SortingData, Opt);
 
     %% Plot
 
@@ -178,18 +186,14 @@ function GroupOneRoi(Opt)
     subplot(1, 10, 1);
     Opt.Raster.Title = 'ROI 1 - Sorting condition';
     Opt.Raster.AddRectangleXTickLabel =  false;
-    PlotOneRaster(SortingData, Opt, CLIM);
+    PlotOneRaster(SortingData, Opt, [], CLIM);
 
     subplot(1, 10, 2:9);
     Opt.Raster.Title = 'ROI 1 - Sorted condition';
-
     Opt.Raster.AddRectangleXTickLabel =  true;
-
     Opt.Raster.AddProfile = true;
-
     Opt.Raster.AddColorBar = true;
-
-    PlotOneRaster(Data, Opt, CLIM);
+    PlotOneRaster(SortingData, Opt, R, CLIM);
 
 end
 
@@ -218,7 +222,10 @@ function GroupOneRoi2Conditions(Opt)
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
 
     Data = BinRaster(Data);
+    Data = SmoothRaster(Data, Opt);
+    
     SortingData = BinRaster(SortingData);
+    SortingData = SmoothRaster(SortingData, Opt);
 
     %% Plot
 
@@ -241,18 +248,14 @@ function GroupOneRoi2Conditions(Opt)
     subplot(1, 10, 1);
     Opt.Raster.Title = 'ROI 1 - Sorting condition';
     Opt.Raster.AddRectangleXTickLabel =  false;
-    PlotOneRaster(SortingData, Opt, CLIM);
+    PlotOneRaster(SortingData, Opt, [], CLIM);
 
     subplot(1, 10, 2:9);
     Opt.Raster.Title = 'ROI 1 - Sorted condition';
-
     Opt.Raster.AddRectangleXTickLabel =  true;
-
     Opt.Raster.AddProfile = true;
-
     Opt.Raster.AddColorBar = true;
-
-    PlotOneRaster(Data, Opt, CLIM);
+    PlotOneRaster(SortingData, Opt, R, CLIM);
 
 end
 
@@ -286,18 +289,10 @@ function Group2By2(Opt)
 
     Opt = SetRasterPlotParameters(Opt);
 
-    for i = 1:numel(Data)
-
-        [Data{i}] = SortRaster(Data{i}, SortingData, Opt, SortBy);
-        Data{i} = BinRaster(Data{i});
-
-    end
-
-    [SortingData] = SortRaster(SortingData, SortingData, Opt, SortBy);
-    SortingData = BinRaster(SortingData);
+    [Data, SortingData, R] = PrepareRasterData(Data, SortingData, Opt, SortBy);
 
     Opt.Title = 'Group Raster - 2 X 2 Conditions';
 
-    PlotSeveralRasters(Opt, Data, SortingData, Titles);
+    PlotSeveralRasters(Opt, Data, SortingData, Titles, R);
 
 end

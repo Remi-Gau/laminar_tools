@@ -1,9 +1,35 @@
 % (C) Copyright 2021 Remi Gau
 
 function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
+    %
+    % Sorts Data for raster given SortingData along the profile Parameter
+    %
+    % USAGE::
+    %
+    %  [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
+    %
+    % Parameter can be `Cst`, `Lin`, `Quad`
+    %
+    % The SortingData returned represents the outcome of:
+    %
+    %   [SortingData] = SortRaster(SortingData, SortingData, Opt, Parameter)
+    %
+    % In other words the sorting data returned is sorted by itself and averaged
+    % (across folds if cross-validated) to be withing the same "range" as the
+    % sorted data.
+    %
+    % Sorting can be done in cross-validated fashion across runs if set so in 
+    % ``Opt.Raster.CrossValidate``
+    %
+    % Deconvolution of the data across layers is done if  
+    % ``Opt.PerformDeconvolution`` is set to ``true()``.
+    %
+    % Data and SortingData can be cells
+    %
 
     if ~Opt.Raster.Sort
         R = [];
+        p = [];
         return
     end
 
