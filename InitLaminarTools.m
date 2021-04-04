@@ -1,7 +1,7 @@
 % (C) Copyright 2020 Remi Gau
 
-function InitEnv()
-    % initEnv()
+function InitLaminarTools()
+    % InitLaminarTools()
     %
     % 1 - Check if version requirements
     % are satisfied and the packages are
