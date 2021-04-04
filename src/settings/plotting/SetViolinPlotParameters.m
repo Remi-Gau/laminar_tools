@@ -1,8 +1,15 @@
 % (C) Copyright 2020 Remi Gau
 
-function [ViolinPlotParameters, MeanDispersion] = GetViolinPlotParameters()
+function [ViolinPlotParameters, MeanDispersion] = SetViolinPlotParameters()
 
-    ViolinPlotParameters.DistWidth = 0.7;
+    ViolinPlotParameters = GetViolinPlotDefautls();
+
+    MeanDispersion = GetMeanDispersionDefaults();
+
+end
+
+function ViolinPlotParameters = GetViolinPlotDefautls()
+
     ViolinPlotParameters.ShowMeanMedian = 0;
     ViolinPlotParameters.GlobalNorm = 2;
 
@@ -16,6 +23,12 @@ function [ViolinPlotParameters, MeanDispersion] = GetViolinPlotParameters()
     ViolinPlotParameters.SpreadWidth = 0.8;
 
     ViolinPlotParameters.Margin = 4.5;
+
+    ViolinPlotParameters.DistWidth = 0.7;
+
+end
+
+function MeanDispersion = GetMeanDispersionDefaults()
 
     MeanDispersion.LineWidth = 1;
     MeanDispersion.Marker = 'o';

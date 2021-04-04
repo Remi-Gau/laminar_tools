@@ -1,4 +1,5 @@
 % (C) Copyright 2020 Remi Gau
+
 function SpaghettiPlot(ToPlot)
 
     % To plot 2 condtions against each other with a spagetthi plot or
@@ -147,7 +148,7 @@ function SpaghettiPlot(ToPlot)
 
 end
 
-function spaghetti_plot(ToPlot, iRow, iColumn, cst_lin)
+function PlotSphagetti(ToPlot, iRow, iColumn, cst_lin)
 
     if strcmp(ToPlot.plot_main, '')
         Xpos = [ ...
@@ -227,7 +228,7 @@ function spaghetti_plot(ToPlot, iRow, iColumn, cst_lin)
 
 end
 
-function plot_betas(Data, ToPlot, fontsize, iCdt, iColumn, S_param)
+function PlotBetas(Data, ToPlot, fontsize, iCdt, iColumn, S_param)
 
     [ROIs_to_plot, NbROI] = find_rois(ToPlot.profile(iCdt, iColumn));
 
@@ -286,7 +287,7 @@ function plot_betas(Data, ToPlot, fontsize, iCdt, iColumn, S_param)
 
 end
 
-function [ROIs_to_plot, NbROI] = find_rois(profile)
+function [ROIs_to_plot, NbROI] = FindRois(profile)
     if isfield(profile, 'main')
         ROIs_to_plot = profile.main;
     else

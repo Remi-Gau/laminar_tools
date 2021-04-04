@@ -1,4 +1,5 @@
 % (C) Copyright 2020 Remi Gau
+
 function [BetaHat] = RunLaminarGlm(Data, DesignMatrix)
     %
     % Runs a laminar GLM to decompose a laminar profile into a constant, a
@@ -33,7 +34,7 @@ function [BetaHat] = RunLaminarGlm(Data, DesignMatrix)
     end
 
     Data = Data';
-    
+
     BetaHat = nan(1, size(DesignMatrix, 2));
     if ~isempty(Data)
         BetaHat = pinv(DesignMatrix) * Data;

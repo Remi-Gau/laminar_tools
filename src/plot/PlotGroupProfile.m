@@ -16,13 +16,7 @@ function  PlotGroupProfile(Opt, iColumn)
     hold on;
     grid off;
 
-    %% Baseline
-    IsMvpa = Opt.Specific{1, iColumn}.IsMvpa;
-    Baseline = [0, 0];
-    if IsMvpa
-        Baseline = [0.5, 0.5];
-    end
-    plot([0, Opt.NbLayers + 0.5], Baseline, '-k', 'LineWidth', 1);
+    IsMvpa = PlotBaseline(Opt, iColumn);
 
     RoiVec = Opt.Specific{1, iColumn}.Group.RoiVec;
     ConditionVec = Opt.Specific{1, iColumn}.Group.ConditionVec;
@@ -43,10 +37,10 @@ function  PlotGroupProfile(Opt, iColumn)
 
             Data = Opt.Specific{1, iColumn}.Group.Data(RowsToSelect, :);
 
+            PlotProfileSubjects(Data, Opt.NbLayers, Opt.Specific{1, iColumn}.PlotSubjects);
+
             GroupMean = mean(Data);
             [LowerError, UpperError] = ComputeDispersionIndex(Data, Opt);
-
-            PlotProfileSubjects(Data, Opt.NbLayers, Opt.Specific{1, iColumn}.PlotSubjects);
 
             xOffset = (iLine - 1) * 0.1;
             PlotMainProfile(GroupMean, LowerError, UpperError, Opt, xOffset, iColumn, iLine);
@@ -60,7 +54,7 @@ function  PlotGroupProfile(Opt, iColumn)
     [Min, Max] = ComputeMargin(Opt.Specific{1, iColumn}.Group.Min, ...
                                Opt.Specific{1, iColumn}.Group.Max);
 
-    axis([0.5, Opt.NbLayers + .5, Min, Max]);
+    axis(gca, [0.5, Opt.NbLayers + .5, Min, Max]);
 
     %% Labels and titles
     set(gca, ...
@@ -91,66 +85,6 @@ function  PlotGroupProfile(Opt, iColumn)
     t = title(Title);
     set(t, 'fontsize', Opt.Fontsize + 2);
 
-end
-
-function PlotMainProfile(GroupMean, LowerError, UpperError, Opt, xOffset, iColumn, iLine)
-    %
-    % Plots the laminar profile for BOLD or MVPA
-    %
-
-    ProfileLine = GetProfileLinePlotParameters();
-
-    if exist('iLine', 'var') && ~isempty(iLine)
-        ProfileLine.MarkerFaceColor = Opt.Specific{1, iColumn}.LineColors(iLine, :);
-        ProfileLine.LineColor = Opt.Specific{1, iColumn}.LineColors(iLine, :);
-    end
-
-    xPosition = (1:Opt.NbLayers) + xOffset;
-
-    if Opt.ShadedErrorBar
-        shadedErrorBar( ...
-                       xPosition, ...
-                       GroupMean, ...
-                       [LowerError; UpperError], ...
-                       'lineProps', { ...
-                                     'Marker', ProfileLine.Marker, ...
-                                     'MarkerSize', ProfileLine.MarkerSize, ...
-                                     'MarkerFaceColor', ProfileLine.MarkerFaceColor, ...
-                                     'LineStyle', ProfileLine.LineStyle, ...
-                                     'LineWidth', ProfileLine.LineWidth, ...
-                                     'Color', ProfileLine.LineColor}, ...
-                       'transparent', ProfileLine.Transparent);
-
-    else
-
-        % Plots a thin error bar and a thick line across data points
-        l = errorbar( ...
-                     xPosition, ...
-                     GroupMean, ...
-                     LowerError, ...
-                     UpperError);
-
-        set(l, ...
-            'Marker', ProfileLine.Marker, ...
-            'MarkerSize', ProfileLine.MarkerSize, ...
-            'MarkerFaceColor', ProfileLine.MarkerFaceColor, ...
-            'LineStyle', ProfileLine.LineStyle, ...
-            'Color', ProfileLine.LineColor, ...
-            'LineWidth', ProfileLine.ErrorLineWidth);
-
-        l = plot( ...
-                 xPosition, ...
-                 GroupMean);
-
-        set(l, ...
-            'Marker', ProfileLine.Marker, ...
-            'MarkerSize', ProfileLine.MarkerSize, ...
-            'MarkerFaceColor', ProfileLine.MarkerFaceColor, ...
-            'LineStyle', ProfileLine.LineStyle, ...
-            'LineWidth', ProfileLine.LineWidth, ...
-            'Color', ProfileLine.LineColor);
-
-    end
 end
 
 function PlotProfileSubjects(GroupMean, NbLayers, PlotSubjects)

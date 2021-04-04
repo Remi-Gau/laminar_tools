@@ -59,7 +59,7 @@ function PlotBetasLaminarGlm(Opt, iParameter, iColumn)
     end
 
     %% Tight fit with some vertical margin
-    ViolinPlotParameters = GetViolinPlotParameters();
+    ViolinPlotParameters = SetViolinPlotParameters();
     [Min, Max, Margin] = ComputeMargin(Opt.Specific{1, iColumn}.Group.Beta.Min, ...
                                        Opt.Specific{1, iColumn}.Group.Beta.Max, ...
                                        ViolinPlotParameters.Margin);
@@ -140,7 +140,7 @@ end
 
 function ViolinPlot(GroupData, Opt, iColumn, iLine)
 
-    ViolinPlotParameters = GetViolinPlotParameters();
+    ViolinPlotParameters = SetViolinPlotParameters();
 
     Xpos = ReturnXpositionViolinPlot();
 
@@ -186,7 +186,7 @@ function PlotMeanAndDispersion(GroupData, Opt, iColumn, iLine)
     % Plots a thin error bar and a thick line across data points
     %
 
-    [~, MeanDispersion] = GetViolinPlotParameters();
+    [~, MeanDispersion] = SetViolinPlotParameters();
 
     Color = Opt.Specific{1, iColumn}.LineColors(iLine, :);
     Xpos = ReturnXpositionViolinPlot();

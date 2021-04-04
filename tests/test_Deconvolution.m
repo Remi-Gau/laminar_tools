@@ -13,13 +13,13 @@ function test_MeanDeconvolution
     OptGenData.NbSubject = 1;
     OptGenData.NbRuns = 200;
     OptGenData.NbLayers = 6;
-    
+
     ROI = 1;
     Cdt = 1;
 
     NbLayers = 6;
 
-    Data =  GenerateDataROI(OptGenData, 1, 1);
+    Data =  GenerateGroupDataROI(OptGenData, 1, 1);
 
     MeanData = mean(Data);
 
