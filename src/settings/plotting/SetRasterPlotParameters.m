@@ -2,6 +2,10 @@
 
 function  Opt = SetRasterPlotParameters(Opt)
 
+    if nargin < 1
+        Opt= [];
+    end
+
     Opt = SetPlottingParameters(Opt);
 
     Opt.Specific{1, 1}.LineColors = 'k';

@@ -2,7 +2,20 @@
 
 function PlotSeveralRasters(Opt, Data, SortingData, Titles, CLIM)
 
-    Profiles = cellfun(@(x) squeeze(mean(x, 1))', Data, 'UniformOutput', false);
+    switch Opt.AverageType
+        case 'median'
+            Profiles = cellfun(@(x) squeeze(median(x, 1))', Data, 'UniformOutput', false);
+        case 'mean'
+            Profiles = cellfun(@(x) squeeze(mean(x, 1))', Data, 'UniformOutput', false);
+    end
+    
+    if ~isfield(Opt.Specific{1}, 'Group')
+        Min = cellfun(@(x) min(x(:)), Profiles);
+        Opt.Specific{1}.Group.Min = min(Min(:));
+        Max = cellfun(@(x) max(x(:)), Profiles);
+        Opt.Specific{1}.Group.Max = max(Max(:));
+    end
+    
     Rasters = cellfun(@(x) mean(x, 3), Data, 'UniformOutput', false);
     SortingRaster = mean(SortingData, 3);
 

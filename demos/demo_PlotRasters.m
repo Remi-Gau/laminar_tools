@@ -164,9 +164,11 @@ function GroupOneRoi(Opt)
 
     SetFigureDefaults(Opt);
 
-    Profiles = mean(Data, 1);
+    % let's take the median across vertices
+    Profiles = median(Data, 1);
     Opt.Raster.Profiles = squeeze(Profiles)';
 
+    % here we take the mean across subjects
     Data = mean(Data, 3);
     SortingData = mean(SortingData, 3);
 
@@ -227,9 +229,8 @@ function GroupOneRoi2Conditions(Opt)
     SetFigureDefaults(Opt);
 
     % get profile for each subject and condition
-    Profiles = mean(Data, 1);
+    Profiles = median(Data, 1);
     Opt.Raster.Profiles = squeeze(Profiles)';
-
     SortingData = mean(SortingData, 3);
 
     % get maximum for average raster
