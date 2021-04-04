@@ -13,9 +13,9 @@ Opt.IID = false;
 
 %% demos with one subject
 Opt.NbSubject = 1;
-Opt.NbVertices = 5000;
+Opt.NbVertices = 1000;
 
-OneRoi(Opt);
+% OneRoi(Opt);
 % OneRoiTwoConditions(Opt);
 
 %% demos with one group
@@ -23,7 +23,7 @@ Opt.NbSubject = 10;
 
 % determine range of vertices
 % that will be given to each subject [Min Max]
-Opt.NbVerticesRange = [4000 5000];
+Opt.NbVerticesRange = [1000 2000];
 
 % GroupOneRoi(Opt);
 % GroupOneRoi2Conditions(Opt);
@@ -71,9 +71,7 @@ function OneRoi(Opt)
     Opt.Raster.AddRectangleXTickLabel =  true;
     
     Opt.Raster.AddProfile = true;
-    Opt.Specific{1, 1}.ProfileLine.LineWidth = 1;
-    Opt.Specific{1, 1}.ProfileLine.MarkerSize = 6;
-    
+
     Opt.Raster.AddColorBar = true;
     PlotOneRaster(Data, Opt, CLIM);
     
@@ -186,8 +184,6 @@ function GroupOneRoi(Opt)
     Opt.Raster.AddRectangleXTickLabel =  true;
     
     Opt.Raster.AddProfile = true;
-    Opt.Specific{1, 1}.ProfileLine.LineWidth = 1;
-    Opt.Specific{1, 1}.ProfileLine.MarkerSize = 6;
     
     Opt.Raster.AddColorBar = true;
     
@@ -252,8 +248,6 @@ function GroupOneRoi2Conditions(Opt)
     Opt.Raster.AddRectangleXTickLabel =  true;
     
     Opt.Raster.AddProfile = true;
-    Opt.Specific{1, 1}.ProfileLine.LineWidth = 1;
-    Opt.Specific{1, 1}.ProfileLine.MarkerSize = 6;
     
     Opt.Raster.AddColorBar = true;
     
@@ -278,6 +272,7 @@ function Group2By2(Opt)
             
             Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
             Data{ROI, Cdt} = GenerateGroupSurfaceDataRaster(Opt);
+            Titles{ROI, Cdt} = sprintf('Condition: %i, %i', ROI, Cdt);
             
         end
     end
@@ -299,59 +294,9 @@ function Group2By2(Opt)
     
     [SortingData] = SortRaster(SortingData, SortingData, Opt, SortBy);
     SortingData = BinRaster(SortingData);
-    
-    Profiles = cellfun(@(x) squeeze(mean(x, 1))', Data, 'UniformOutput', false);
-    Rasters = cellfun(@(x) mean(x, 3), Data, 'UniformOutput', false);
-    SortingRaster = mean(SortingData, 3);
-    
-    MAX = GetAbsMax(Rasters);
-    CLIM = [-MAX MAX];
-    
-    %% Plot
-    
-    Opt.m = size(Rasters, 2);
-    Opt.n = size(Rasters, 1);
-    
+
     Opt.Title = 'Group Raster - 2 X 2 Conditions';
     
-    figure('name', Opt.Title, 'position', Opt.FigDim);
-    
-    SetFigureDefaults(Opt);
-    
-    Opt.Specific{1, 1}.ProfileLine.LineWidth = 0.5;
-    Opt.Specific{1, 1}.ProfileLine.MarkerSize = 3;
-    
-    SubplotCounter = 1;
-    
-    Opt.Raster.AddRectangleXTickLabel =  false;
-    
-    for iRow = 1:Opt.n
-        
-        if iRow == Opt.n
-            Opt.Raster.AddRectangleXTickLabel =  true;
-        end
-        
-        Opt.Raster.AddColorBar = false;
-        
-        for iCol = 1:Opt.m
+    PlotSeveralRasters(Opt, Data, SortingData, Titles)
 
-            if iCol == Opt.m
-                Opt.Raster.AddColorBar = true;
-            end
-
-            subplot(Opt.n, Opt.m, SubplotCounter);
-            
-            Opt.Raster.Profiles = Profiles{iRow, iCol};
-            Opt.Raster.Title = sprintf('Condition: %i, %i', iRow, iCol);
-
-            Opt.Raster.AddProfile = true;
-
-            PlotOneRaster(Rasters{iRow, iCol}, Opt, CLIM);
-            
-            SubplotCounter = SubplotCounter + 1;
-            
-        end
-    end
-    
 end
-

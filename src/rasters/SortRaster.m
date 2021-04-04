@@ -1,4 +1,4 @@
-% (C) Copyright 2020 Remi Gau
+% (C) Copyright 2021 Remi Gau
 
 function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
 

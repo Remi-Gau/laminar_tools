@@ -35,6 +35,8 @@ function RasterDefaults = GetRasterDefaults()
     RasterDefaults.Raster.CrossValidate = true;
 
     RasterDefaults.Raster.AddProfile = false;
+    RasterDefaults.Raster.Profile.LineWidth = 0.5;
+    RasterDefaults.Raster.Profile.MarkerSize = 3;    
 
     RasterDefaults.Raster.AddColorBar = false;
 
