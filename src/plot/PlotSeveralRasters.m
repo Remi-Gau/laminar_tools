@@ -1,6 +1,6 @@
 % (C) Copyright 2021 Remi Gau
 
-function PlotSeveralRasters(Opt, Data, SortingData, Titles, R, CLIM)
+function PlotSeveralRasters(Opt, Data, SortingData, Titles, Beta, CLIM)
 
     switch Opt.AverageType
         case 'median'
@@ -62,12 +62,12 @@ function PlotSeveralRasters(Opt, Data, SortingData, Titles, R, CLIM)
             Opt.Raster.AddProfile = true;
 
             if nargin < 5
-                r = [];
+                beta = [];
             else
-                r = R{iRow, iCol};
+                beta = Beta{iRow, iCol};
             end
 
-            PlotOneRaster(Rasters{iRow, iCol}, Opt, r, CLIM);
+            PlotOneRaster(Rasters{iRow, iCol}, Opt, beta, CLIM);
 
             SubplotCounter = SubplotCounter + 1;
 

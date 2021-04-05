@@ -1,6 +1,6 @@
 % (C) Copyright 2021 Remi Gau
 
-function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
+function [Data, SortingData, Beta] = SortRaster(Data, SortingData, Opt, Parameter)
     %
     % Sorts Data for raster given SortingData along the profile Parameter
     %
@@ -28,8 +28,7 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
     %
 
     if ~Opt.Raster.Sort
-        R = [];
-        p = [];
+        Beta = [];
         return
     end
 
@@ -39,7 +38,7 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
     if iscell(Data) && iscell(SortingData)
 
         for iSub = 1:size(Data, 1)
-            [Data{iSub}, SortingData{iSub}, R{iSub}] = SortRaster( ...
+            [Data{iSub}, SortingData{iSub}, Beta{iSub}] = SortRaster( ...
                                                                   Data{iSub}, ...
                                                                   SortingData{iSub}, ...
                                                                   Opt, ...
@@ -61,7 +60,7 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
         SortingData = mean(SortingData, 3);
         Data = mean(Data, 3);
 
-        [Data, SortingData, R] = SortThisRaster(Data, SortingData, DesignMatrix, Opt, Parameter);
+        [Data, SortingData, Beta] = SortThisRaster(Data, SortingData, DesignMatrix, Opt, Parameter);
 
     else
 
@@ -80,7 +79,7 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
             % Apply the sorting to the left out fold of the data
             % and sorting data to return both
             SortedFoldsData = mean(Data(:, :, SortedFolds), 3);
-            [DataTemp(:, :, iFold), R(iFold)] = SortThisRaster(SortedFoldsData, ...
+            [DataTemp(:, :, iFold), Beta(iFold)] = SortThisRaster(SortedFoldsData, ...
                                                                SortingFoldData, ...
                                                                Opt, ...
                                                                DesignMatrix, ...
@@ -98,13 +97,13 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
 
         SortingData = mean(SortingDataTemp, 3);
         Data = mean(DataTemp, 3);
-        R = mean(R);
+        Beta = mean(Beta);
 
     end
 
 end
 
-function [Data, R] = SortThisRaster(Data, SortingData, Opt, DesignMatrix, Parameter)
+function [Data, Beta] = SortThisRaster(Data, SortingData, Opt, DesignMatrix, Parameter)
 
     switch lower(Parameter)
         case 'cst'
@@ -126,12 +125,18 @@ function [Data, R] = SortThisRaster(Data, SortingData, Opt, DesignMatrix, Parame
     SortingBeta = SortingBeta(:, Keep);
     BetaToSort = BetaToSort(:, Keep);
 
-    R = corrcoef(SortingBeta, BetaToSort);
-
     [~, Idx] = sort(SortingBeta);
-
     Data = Data(Idx, :);
-
-    R = R(2);
+    
+    Beta = glmfit(SortingBeta, BetaToSort, 'normal');
+    Beta = Beta(1);
+    
+    % A regression is preferred to the correlation 
+    % (more appropriate if we want to do inferential statistics later)
+    %
+    % Old approach had correlations
+    %
+    %     Beta = corrcoef(SortingBeta, BetaToSort);
+    %     Beta = Beta(2);
 
 end

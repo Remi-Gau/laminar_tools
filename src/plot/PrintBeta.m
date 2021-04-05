@@ -1,19 +1,19 @@
 % (C) Copyright 2020 Remi Gau
 
-function PrintR(R, Opt)
+function PrintBeta(Beta, Opt)
 
     if Opt.Raster.PlotRValue
 
-        if iscell(R)
-            R = cell2mat(R)';
+        if iscell(Beta)
+            Beta = cell2mat(Beta)';
         end
 
-        CentralTendency = mean(R);
-        Error = ComputeDispersionIndex(R, Opt);
+        CentralTendency = mean(Beta);
+        Error = ComputeDispersionIndex(Beta, Opt);
 
-        P = ComputePValue(R, Opt, Opt.Specific{1}.Ttest);
+        P = ComputePValue(Beta, Opt, Opt.Specific{1}.Ttest);
 
-        R = sprintf('R=%.2f +/- %.2f\np=%.3f', CentralTendency, Error, P);
+        Beta = sprintf('beta=%.2f +/- %.2f\np=%.3f', CentralTendency, Error, P);
 
         ax = gca;
 
@@ -22,7 +22,7 @@ function PrintR(R, Opt)
         t1 = text( ...
                   Xpos, ...
                   Ypos, ...
-                  sprintf(R));
+                  sprintf(Beta));
         set(t1, 'fontsize', Opt.Fontsize - 2, ...
             'HorizontalAlignment', 'Center');
 

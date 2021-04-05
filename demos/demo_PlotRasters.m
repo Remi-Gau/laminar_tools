@@ -15,8 +15,8 @@ Opt.IID = false;
 Opt.NbSubject = 1;
 Opt.NbVertices = 1000;
 
-% OneRoi(Opt);
-% OneRoiTwoConditions(Opt);
+OneRoi(Opt);
+OneRoiTwoConditions(Opt);
 
 %% demos with one group
 Opt.NbSubject = 10;
@@ -25,9 +25,9 @@ Opt.NbSubject = 10;
 % that will be given to each subject [Min Max]
 Opt.NbVerticesRange = [1000 2000];
 
-% GroupOneRoi(Opt);
-% GroupOneRoi2Conditions(Opt);
-% Group2By2(Opt);
+GroupOneRoi(Opt);
+GroupOneRoi2Conditions(Opt);
+Group2By2(Opt);
 
 %% demos with ROIs of different size on same figure (left and right hemisphere)
 Group2By2DifferentRois(Opt);
@@ -49,7 +49,7 @@ function OneRoi(Opt)
 
     SortingData = Data;
 
-    [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
+    [Data, SortingData, Beta] = SortRaster(Data, SortingData, Opt, SortBy);
 
     Data = BinRaster(Data);
 
@@ -78,7 +78,7 @@ function OneRoi(Opt)
     Opt.Raster.PlotRValue = true;
     Opt.Raster.AddProfile = true;
     Opt.Raster.AddColorBar = true;
-    PlotOneRaster(SortingData, Opt, R, CLIM);
+    PlotOneRaster(SortingData, Opt, Beta, CLIM);
 
 end
 
@@ -109,7 +109,7 @@ function OneRoiTwoConditions(Opt)
 
     Opt = SetRasterPlotParameters(Opt);
 
-    [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
+    [Data, SortingData, Beta] = SortRaster(Data, SortingData, Opt, SortBy);
 
     Data = BinRaster(Data, NbBin);
     Data = SmoothRaster(Data, Opt);
@@ -136,7 +136,7 @@ function OneRoiTwoConditions(Opt)
     Opt.Raster.Title = 'ROI 1 - Sorted condition';
     Opt.Raster.AddProfile = true;
     Opt.Raster.AddColorBar = true;
-    PlotOneRaster(SortingData, Opt, R, CLIM);
+    PlotOneRaster(SortingData, Opt, Beta, CLIM);
 
 end
 
@@ -159,7 +159,7 @@ function GroupOneRoi(Opt)
 
     SortingData = Data;
 
-    [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
+    [Data, SortingData, Beta] = SortRaster(Data, SortingData, Opt, SortBy);
 
     Data = BinRaster(Data);
     Data = SmoothRaster(Data, Opt);
@@ -196,7 +196,7 @@ function GroupOneRoi(Opt)
     Opt.Raster.AddRectangleXTickLabel =  true;
     Opt.Raster.AddProfile = true;
     Opt.Raster.AddColorBar = true;
-    PlotOneRaster(SortingData, Opt, R, CLIM);
+    PlotOneRaster(SortingData, Opt, Beta, CLIM);
 
 end
 
@@ -222,7 +222,7 @@ function GroupOneRoi2Conditions(Opt)
 
     Opt = SetRasterPlotParameters(Opt);
 
-    [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
+    [Data, SortingData, Beta] = SortRaster(Data, SortingData, Opt, SortBy);
 
     Data = BinRaster(Data);
     Data = SmoothRaster(Data, Opt);
@@ -258,7 +258,7 @@ function GroupOneRoi2Conditions(Opt)
     Opt.Raster.AddRectangleXTickLabel =  true;
     Opt.Raster.AddProfile = true;
     Opt.Raster.AddColorBar = true;
-    PlotOneRaster(SortingData, Opt, R, CLIM);
+    PlotOneRaster(SortingData, Opt, Beta, CLIM);
 
 end
 
@@ -292,11 +292,11 @@ function Group2By2(Opt)
 
     Opt = SetRasterPlotParameters(Opt);
 
-    [Data, SortingData, R] = PrepareRasterData(Data, SortingData, Opt, SortBy);
+    [Data, SortingData, Beta] = PrepareRasterData(Data, SortingData, Opt, SortBy);
 
     Opt.Title = 'Group Raster - 2 X 2 Conditions';
 
-    PlotSeveralRasters(Opt, Data, SortingData, Titles, R);
+    PlotSeveralRasters(Opt, Data, SortingData, Titles, Beta);
 
 end
 
@@ -332,10 +332,10 @@ function Group2By2DifferentRois(Opt)
 
     Opt = SetRasterPlotParameters(Opt);
 
-    [Data, SortingData, R] = PrepareRasterData(Data, SortingData, Opt, SortBy);
+    [Data, SortingData, Beta] = PrepareRasterData(Data, SortingData, Opt, SortBy);
 
     Opt.Title = 'Group Raster - 2 X 2 Conditions';
 
-    PlotSeveralRasters(Opt, Data, SortingData, Titles, R);
+    PlotSeveralRasters(Opt, Data, SortingData, Titles, Beta);
 
 end

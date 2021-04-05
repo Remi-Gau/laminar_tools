@@ -1,6 +1,6 @@
 % (C) Copyright 2020 Remi Gau
 
-function PlotOneRaster(Data, Opt, R, CLIM)
+function PlotOneRaster(Data, Opt, Beta, CLIM)
 
     set(gca, 'xtick', [], 'ytick', []);
 
@@ -38,9 +38,9 @@ function PlotOneRaster(Data, Opt, R, CLIM)
         'fontsize', Opt.Fontsize);
 
     if nargin < 3
-        R = [];
+        Beta = [];
     end
-    PrintR(R, Opt);
+    PrintBeta(Beta, Opt);
 
     AddProfileToRaster(Data, Opt);
 

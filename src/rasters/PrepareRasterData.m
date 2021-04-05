@@ -1,6 +1,6 @@
 % (C) Copyright 2021 Remi Gau
 
-function [Data, SortingData, R] = PrepareRasterData(Data, SortingData, Opt, SortBy)
+function [Data, SortingData, Beta] = PrepareRasterData(Data, SortingData, Opt, SortBy)
 
     fprintf(' Sorting and binning\n');
 
@@ -9,7 +9,7 @@ function [Data, SortingData, R] = PrepareRasterData(Data, SortingData, Opt, Sort
         for i = 1:size(Data, 1)
             for j = 1:size(Data, 2)
 
-                [Data{i, j}, R{i, j}] = PreProcessRasterData(Data{i, j}, ...
+                [Data{i, j}, Beta{i, j}] = PreProcessRasterData(Data{i, j}, ...
                                                              SortingData{i, j}, ...
                                                              Opt, ...
                                                              SortBy);
@@ -27,7 +27,7 @@ function [Data, SortingData, R] = PrepareRasterData(Data, SortingData, Opt, Sort
         for i = 1:size(Data, 1)
             for j = 1:size(Data, 2)
 
-                [Data{i, j}, R{i, j}] = PreProcessRasterData(Data{i, j}, ...
+                [Data{i, j}, Beta{i, j}] = PreProcessRasterData(Data{i, j}, ...
                                                              SortingData, ...
                                                              Opt, ...
                                                              SortBy);
@@ -44,9 +44,9 @@ function [Data, SortingData, R] = PrepareRasterData(Data, SortingData, Opt, Sort
 
 end
 
-function [ToSort, R] = PreProcessRasterData(ToSort, Sorting, Opt, SortBy)
+function [ToSort, Beta] = PreProcessRasterData(ToSort, Sorting, Opt, SortBy)
 
-    [ToSort, ~, R] = SortRaster(ToSort, Sorting, Opt, SortBy);
+    [ToSort, ~, Beta] = SortRaster(ToSort, Sorting, Opt, SortBy);
     ToSort = BinRaster(ToSort);
     ToSort = SmoothRaster(ToSort, Opt);
 
