@@ -10,7 +10,11 @@ function PlotSeveralRasters(Opt, Data, SortingData, Titles, R, CLIM)
     end
     
     Rasters = cellfun(@(x) mean(x, 3), Data, 'UniformOutput', false);
-    SortingRaster = mean(SortingData, 3);
+    if iscell(SortingData)
+            SortingRaster = cellfun(@(x) mean(x, 3), SortingData, 'UniformOutput', false);
+    else
+            SortingRaster = mean(SortingData, 3);
+    end
 
     if nargin < 6 || isempty(CLIM)
         CLIM = ComputeClimMatrix(Rasters, false());

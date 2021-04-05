@@ -15,8 +15,8 @@ Opt.IID = false;
 Opt.NbSubject = 1;
 Opt.NbVertices = 1000;
 
-OneRoi(Opt);
-OneRoiTwoConditions(Opt);
+% OneRoi(Opt);
+% OneRoiTwoConditions(Opt);
 
 %% demos with one group
 Opt.NbSubject = 10;
@@ -25,9 +25,12 @@ Opt.NbSubject = 10;
 % that will be given to each subject [Min Max]
 Opt.NbVerticesRange = [1000 2000];
 
-GroupOneRoi(Opt);
-GroupOneRoi2Conditions(Opt);
-Group2By2(Opt);
+% GroupOneRoi(Opt);
+% GroupOneRoi2Conditions(Opt);
+% Group2By2(Opt);
+
+%% demos with ROIs of different size on same figure (left and right hemisphere)
+Group2By2DifferentRois(Opt);
 
 function OneRoi(Opt)
 
@@ -283,6 +286,46 @@ function Group2By2(Opt)
 
     SortingData = Data{1, 1};
 
+    %% Sort and bin data
+
+    SortBy = 'Cst';
+
+    Opt = SetRasterPlotParameters(Opt);
+
+    [Data, SortingData, R] = PrepareRasterData(Data, SortingData, Opt, SortBy);
+
+    Opt.Title = 'Group Raster - 2 X 2 Conditions';
+
+    PlotSeveralRasters(Opt, Data, SortingData, Titles, R);
+
+end
+
+function Group2By2DifferentRois(Opt)
+    %
+    % just as an example of how to plot several conditions
+    % sorted by the same one
+    %
+
+    %% Generate data
+    %
+    % let's pretend that they are 4 different conditions
+
+    Opt = GenerateNumberVertexForSubject(Opt);
+
+    for ROI = 1:2
+        
+        Opt.NbVerticesRange = [1000 2000] * ROI;
+        
+        for Cdt = 1:2
+
+            Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
+            Data{Cdt, ROI} = GenerateGroupSurfaceDataRaster(Opt);
+            SortingData{Cdt, ROI} = Data{Cdt, ROI};
+            Titles{Cdt, ROI} = sprintf('Condition: %i, %i', ROI, Cdt);
+
+        end
+    end
+    
     %% Sort and bin data
 
     SortBy = 'Cst';

@@ -12,9 +12,13 @@ function Defaults = GetDefaults()
 
     Defaults.NbLayers = 6;
 
-    % average across vertices / voxels
+    % central tendency estimator across vertices / voxels
     Defaults.AverageType = 'median';
 
     Defaults.PerformDeconvolution = true;
+    
+    Defaults.PoolIpsiContra = false;
+    
+    Defaults.PlotTargets = false;
 
 end

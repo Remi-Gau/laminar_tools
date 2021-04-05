@@ -19,7 +19,7 @@ function structure = SetDefaultFields(structure, fieldsToSet)
         if isfield(structure, names{i}) && isstruct(structure.(names{i}))
 
             structure.(names{i}) = ...
-                setDefaultFields(structure.(names{i}), fieldsToSet.(names{i}));
+                SetDefaultFields(structure.(names{i}), fieldsToSet.(names{i}));
 
         else
 

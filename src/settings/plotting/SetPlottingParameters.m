@@ -13,6 +13,10 @@ function  Opt = SetPlottingParameters(Opt)
     if Opt.PerformDeconvolution
         Opt.Title = [Opt.Title ' - deconvolved'];
     end
+    
+    if Opt.PoolIpsiContra
+        Opt.Title = [Opt.Title ' pooled'];
+    end
 
 end
 

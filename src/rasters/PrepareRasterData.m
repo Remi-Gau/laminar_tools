@@ -4,21 +4,54 @@ function [Data, SortingData, R] = PrepareRasterData(Data, SortingData, Opt, Sort
     
     fprintf('  Sorting and binning\n');
     
-    for i = 1:size(Data,1)
-        for j = 1:size(Data,2)
+    if all(size(Data)==size(SortingData))
         
-        [Data{i, j}, ~, R{i, j}] = SortRaster(Data{i, j}, ...
+        for i = 1:size(Data,1)
+            for j = 1:size(Data,2)
+
+                [Data{i, j}, R{i, j}] = PreProcessRasterData(Data{i, j}, ...
+                    SortingData{i, j}, ...
+                    Opt, ...
+                    SortBy);
+
+                [SortingData{i, j}] = PreProcessRasterData(SortingData{i, j}, ...
+                    SortingData{i, j}, ...
+                    Opt, ...
+                    SortBy);
+
+                
+            end
+        end
+        
+    else
+        
+        for i = 1:size(Data,1)
+            for j = 1:size(Data,2)
+                
+                
+                [Data{i, j}, R{i, j}] = PreProcessRasterData(Data{i, j}, ...
+                    SortingData, ...
+                    Opt, ...
+                    SortBy);
+                
+                
+            end
+        end
+        
+        SortingData = PreProcessRasterData(SortingData, ...
             SortingData, ...
             Opt, ...
             SortBy);
-        Data{i, j} = BinRaster(Data{i, j});
-        Data{i, j} = SmoothRaster(Data{i, j}, Opt);
-        
-        end
+
     end
     
-    [SortingData] = SortRaster(SortingData, SortingData, Opt, SortBy);
-    SortingData = BinRaster(SortingData);
-    SortingData = SmoothRaster(SortingData, Opt);
+end
+
+
+function [ToSort, R] = PreProcessRasterData(ToSort, Sorting, Opt, SortBy)
+    
+    [ToSort, ~, R] = SortRaster(ToSort, Sorting, Opt, SortBy);
+    ToSort = BinRaster(ToSort);
+    ToSort = SmoothRaster(ToSort, Opt);
     
 end

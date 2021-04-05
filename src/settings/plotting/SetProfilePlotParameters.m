@@ -24,7 +24,8 @@ function Opt = SetProfilePlotParameters(Opt)
         Opt.Specific{1, 2}.BetaSubplot = {[16 18]; [20 22]; [24 26]};
         Opt.Specific{1, 2}.LineColors = [127 127 127] / 256;
 
-        Opt.Specific{1, 2}.PlotMinMaxType = 'all';
+        % Possible options: all group groupallcolumns
+        Opt.Specific{1, 2}.PlotMinMaxType = 'group';
     end
 
     Opt = CheckProfilePlottingOptions(Opt);
@@ -51,9 +52,9 @@ function SpecificDefaults = GetSpecificDefaults()
 
     SpecificDefaults.IsMvpa = false;
     SpecificDefaults.Ttest.SideOfTtest = 'both';
-    SpecificDefaults.PlotSubjects = true;
+    SpecificDefaults.PlotSubjects = false;
 
-    % all group groupallcolumns
+    % Possible options: all group groupallcolumns
     SpecificDefaults.PlotMinMaxType = 'group';
 
     SpecificDefaults.ConditionVec = 1;
