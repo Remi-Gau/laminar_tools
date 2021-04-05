@@ -15,14 +15,14 @@ function Defaults = GetDefaults()
     % central tendency estimator across vertices / voxels
     Defaults.AverageType = 'median';
 
-    Defaults.PerformDeconvolution = true;
+    Defaults.PerformDeconvolution = false;
 
     Defaults.PlotQuadratic = false;
-    
+
     % make sure that conditions are organized as ipsi and contra
     % not as left and right
     Defaults.ReassignIpsiContra = true;
-    
+
     Defaults.PoolIpsiContra = false;
 
     Defaults.Targets = false;
