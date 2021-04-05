@@ -17,8 +17,14 @@ function Defaults = GetDefaults()
 
     Defaults.PerformDeconvolution = true;
 
+    Defaults.PlotQuadratic = false;
+    
+    % make sure that conditions are organized as ipsi and contra
+    % not as left and right
+    Defaults.ReassignIpsiContra = true;
+    
     Defaults.PoolIpsiContra = false;
 
-    Defaults.PlotTargets = false;
+    Defaults.Targets = false;
 
 end

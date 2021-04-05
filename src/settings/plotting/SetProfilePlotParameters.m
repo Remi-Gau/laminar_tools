@@ -38,10 +38,6 @@ function ProfilePlotDefaults = GetProfilePlotDefaults()
     ProfilePlotDefaults.PermutationTest.Do = false;
     ProfilePlotDefaults.PermutationTest.Plot = false;
 
-    ProfilePlotDefaults.PlotQuadratic = false;
-
-    ProfilePlotDefaults.PerformDeconvolution = true;
-
     ProfilePlotDefaults.ShadedErrorBar = false;
 
     ProfilePlotDefaults.n = 3;

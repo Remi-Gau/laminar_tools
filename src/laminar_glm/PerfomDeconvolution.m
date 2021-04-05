@@ -2,8 +2,8 @@
 
 function DeconvolvedData = PerfomDeconvolution(Data, NbLayers, PeakToTailModel, NbLayerModel, Normalize)
     %
-    % Data: array n X m array with m = number of layers and n = number of
-    %       measurements
+    % Data: array n X m array with m = number of layers 
+    %                          and n = number of measurements
     %
     % adapted from simulation code from Uta Noppeney
 

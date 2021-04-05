@@ -3,7 +3,7 @@
 function  Opt = SetPlottingParameters(Opt)
 
     if nargin < 1 || isempty(Opt)
-        Opt = SetDefaults(Opt);
+        Opt = SetDefaults();
     else
         Opt = SetDefaultFields(Opt, SetDefaults());
     end
