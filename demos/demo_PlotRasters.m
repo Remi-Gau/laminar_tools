@@ -59,9 +59,7 @@ function OneRoi(Opt)
 
     Opt.Title = 'Raster - One ROI - One Condition';
 
-    figure('name', Opt.Title, 'position', Opt.FigDim);
-
-    SetFigureDefaults(Opt);
+    Opt = OpenFigure(Opt);
 
     MAX = GetAbsMax(Data);
     CLIM = [-MAX MAX];
@@ -121,9 +119,7 @@ function OneRoiTwoConditions(Opt)
 
     Opt.Title = 'Raster - One ROI - With Condition';
 
-    figure('name', Opt.Title, 'position', Opt.FigDim);
-
-    SetFigureDefaults(Opt);
+    Opt = OpenFigure(Opt);
 
     MAX = GetAbsMax(Data);
     CLIM = [-MAX MAX];
@@ -171,9 +167,7 @@ function GroupOneRoi(Opt)
 
     Opt.Title = 'Group Raster - One ROI - One Condition';
 
-    figure('name', Opt.Title, 'position', Opt.FigDim);
-
-    SetFigureDefaults(Opt);
+    Opt = OpenFigure(Opt);
 
     % let's take the median across vertices
     Profiles = median(Data, 1);
@@ -234,9 +228,7 @@ function GroupOneRoi2Conditions(Opt)
 
     Opt.Title = 'Group Raster - One ROI - 2 Conditions';
 
-    figure('name', Opt.Title, 'position', Opt.FigDim);
-
-    SetFigureDefaults(Opt);
+    Opt = OpenFigure(Opt);
 
     % get profile for each subject and condition
     Profiles = median(Data, 1);

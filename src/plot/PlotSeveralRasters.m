@@ -32,9 +32,7 @@ function PlotSeveralRasters(Opt, Data, SortingData, Titles, Beta, CLIM)
 
     Opt.FigDim = [50, 50, 50 + Opt.m * 600, 50 + Opt.n * 400];
 
-    figure('name', Opt.Title, 'position', Opt.FigDim);
-
-    SetFigureDefaults(Opt);
+    Opt = OpenFigure(Opt);
 
     SubplotCounter = 1;
 

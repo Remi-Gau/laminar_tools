@@ -4,7 +4,7 @@ function PlotProfileAndBetas(Opt)
 
     Opt = SetProfilePlotParameters(Opt);
 
-    OpenFigure(Opt);
+    Opt = OpenFigure(Opt);
 
     for iColumn = 1:size(Opt.Specific, 2)
 

@@ -17,7 +17,7 @@ function Defaults = GetDefaults()
 
     Defaults.PerformDeconvolution = true;
 
-    Defaults.PoolIpsiContra = true;
+    Defaults.PoolIpsiContra = false;
 
     Defaults.PlotTargets = false;
 
