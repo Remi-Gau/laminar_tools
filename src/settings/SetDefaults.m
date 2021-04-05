@@ -16,9 +16,9 @@ function Defaults = GetDefaults()
     Defaults.AverageType = 'median';
 
     Defaults.PerformDeconvolution = true;
-    
-    Defaults.PoolIpsiContra = false;
-    
+
+    Defaults.PoolIpsiContra = true;
+
     Defaults.PlotTargets = false;
 
 end

@@ -9,7 +9,7 @@ function Clim = ComputeClimMatrix(Data, SymmetricalClim)
     if nargin < 2 || isempty(SymmetricalClim)
         SymmetricalClim = true;
     end
-    
+
     if SymmetricalClim
         Max = GetAbsMax(Data);
         Clim = [-Max, Max];
@@ -23,7 +23,7 @@ function Clim = ComputeClimMatrix(Data, SymmetricalClim)
         Min = Data(:);
         Max = Data(:);
     end
-    
+
     Min = min(Min(:));
     Max = max(Max(:));
 

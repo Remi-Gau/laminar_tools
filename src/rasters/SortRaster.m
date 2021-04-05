@@ -18,10 +18,10 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
     % (across folds if cross-validated) to be withing the same "range" as the
     % sorted data.
     %
-    % Sorting can be done in cross-validated fashion across runs if set so in 
+    % Sorting can be done in cross-validated fashion across runs if set so in
     % ``Opt.Raster.CrossValidate``
     %
-    % Deconvolution of the data across layers is done if  
+    % Deconvolution of the data across layers is done if
     % ``Opt.PerformDeconvolution`` is set to ``true()``.
     %
     % Data and SortingData can be cells
@@ -48,9 +48,9 @@ function [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, Parameter)
 
         return
     end
-    
-    if ~all(size(Data)==size(SortingData))
-        error('Sorting data and data to sort should have the same size.')
+
+    if ~all(size(Data) == size(SortingData))
+        error('Sorting data and data to sort should have the same size.');
     end
 
     Quad = true;

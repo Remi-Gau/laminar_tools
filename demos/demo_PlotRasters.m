@@ -52,7 +52,7 @@ function OneRoi(Opt)
     [Data, SortingData, R] = SortRaster(Data, SortingData, Opt, SortBy);
 
     Data = BinRaster(Data);
-    
+
     Data = SmoothRaster(Data, Opt);
 
     %% Plot
@@ -113,7 +113,7 @@ function OneRoiTwoConditions(Opt)
 
     Data = BinRaster(Data, NbBin);
     Data = SmoothRaster(Data, Opt);
-    
+
     SortingData = BinRaster(SortingData, NbBin);
     SortingData = SmoothRaster(SortingData, Opt);
 
@@ -163,7 +163,7 @@ function GroupOneRoi(Opt)
 
     Data = BinRaster(Data);
     Data = SmoothRaster(Data, Opt);
-    
+
     SortingData = BinRaster(SortingData);
     SortingData = SmoothRaster(SortingData, Opt);
 
@@ -226,7 +226,7 @@ function GroupOneRoi2Conditions(Opt)
 
     Data = BinRaster(Data);
     Data = SmoothRaster(Data, Opt);
-    
+
     SortingData = BinRaster(SortingData);
     SortingData = SmoothRaster(SortingData, Opt);
 
@@ -313,9 +313,9 @@ function Group2By2DifferentRois(Opt)
     Opt = GenerateNumberVertexForSubject(Opt);
 
     for ROI = 1:2
-        
+
         Opt.NbVerticesRange = [1000 2000] * ROI;
-        
+
         for Cdt = 1:2
 
             Opt = SetParametersProfileSimulation(Opt, ROI, Cdt);
@@ -325,7 +325,7 @@ function Group2By2DifferentRois(Opt)
 
         end
     end
-    
+
     %% Sort and bin data
 
     SortBy = 'Cst';

@@ -3,7 +3,7 @@
 function  Opt = SetRasterPlotParameters(Opt)
 
     if nargin < 1
-        Opt= [];
+        Opt = [];
     end
 
     Opt = SetPlottingParameters(Opt);
@@ -35,12 +35,11 @@ function RasterDefaults = GetRasterDefaults()
         RasterDefaults.Raster.ColorMap = SeismicColorMap(1000);
     end
 
-    
     RasterDefaults.Raster.Sort = true;
     RasterDefaults.Raster.CrossValidate = true;
 
     RasterDefaults.Raster.PlotRValue = true;
-    
+
     RasterDefaults.Raster.AddProfile = false;
     RasterDefaults.Raster.Profile.LineWidth = 0.5;
     RasterDefaults.Raster.Profile.MarkerSize = 3;

@@ -3,7 +3,7 @@
 function t = PrintPValue(P, Xpos, Ypos, Opt)
 
     t = [];
-    
+
     if Opt.PlotPValue
 
         for iP = 1:numel(P)

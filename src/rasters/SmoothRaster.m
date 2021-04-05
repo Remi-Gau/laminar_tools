@@ -3,5 +3,5 @@
 function Data = SmoothRaster(Data, Opt)
 
     Data = imgaussfilt(Data,  [size(Data, 1) * Opt.Raster.VerticalFWHM  .001]);
-    
+
 end

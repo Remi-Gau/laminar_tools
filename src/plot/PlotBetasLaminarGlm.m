@@ -215,4 +215,3 @@ function PlotMeanAndDispersion(GroupData, Opt, iColumn, iLine)
         'Color', Color);
 
 end
-

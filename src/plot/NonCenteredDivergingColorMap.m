@@ -10,12 +10,12 @@ function [NewColorMap] = NonCenteredDivergingColorMap(Data, ColorMap)
     MAX = MinMax(2);
     [AbsMax, Idx] = max(abs([MIN MAX]));
     Scale = linspace(-1 * AbsMax, AbsMax, size(ColorMap, 1))';
-    
+
     if Idx == 2
         Idx = Scale < MIN;
     else
         Idx = Scale > MAX;
-        
+
     end
     NewColorMap = ColorMap(~Idx, :);
 

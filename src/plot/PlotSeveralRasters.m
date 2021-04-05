@@ -8,19 +8,19 @@ function PlotSeveralRasters(Opt, Data, SortingData, Titles, R, CLIM)
         case 'mean'
             Profiles = cellfun(@(x) squeeze(mean(x, 1))', Data, 'UniformOutput', false);
     end
-    
+
     Rasters = cellfun(@(x) mean(x, 3), Data, 'UniformOutput', false);
     if iscell(SortingData)
-            SortingRaster = cellfun(@(x) mean(x, 3), SortingData, 'UniformOutput', false);
+        SortingRaster = cellfun(@(x) mean(x, 3), SortingData, 'UniformOutput', false);
     else
-            SortingRaster = mean(SortingData, 3);
+        SortingRaster = mean(SortingData, 3);
     end
 
     if nargin < 6 || isempty(CLIM)
         CLIM = ComputeClimMatrix(Rasters, false());
         Opt.Raster.ColorMap = NonCenteredDivergingColorMap(Rasters, Opt.Raster.ColorMap);
     end
- 
+
     if ~isfield(Opt.Specific{1}, 'Group')
         Clim = ComputeClimMatrix(Profiles, false());
         Opt.Specific{1}.Group.Min = Clim(1);
@@ -29,8 +29,8 @@ function PlotSeveralRasters(Opt, Data, SortingData, Titles, R, CLIM)
 
     Opt.m = size(Rasters, 2);
     Opt.n = size(Rasters, 1);
-    
-    Opt.FigDim = [50, 50, 50 + Opt.m * 400, 50 + Opt.n * 400];
+
+    Opt.FigDim = [50, 50, 50 + Opt.m * 600, 50 + Opt.n * 400];
 
     figure('name', Opt.Title, 'position', Opt.FigDim);
 
@@ -66,7 +66,7 @@ function PlotSeveralRasters(Opt, Data, SortingData, Titles, R, CLIM)
             else
                 r = R{iRow, iCol};
             end
-            
+
             PlotOneRaster(Rasters{iRow, iCol}, Opt, r, CLIM);
 
             SubplotCounter = SubplotCounter + 1;
@@ -75,8 +75,8 @@ function PlotSeveralRasters(Opt, Data, SortingData, Titles, R, CLIM)
     end
 
     mtit(Opt.Title, ...
-        'fontsize', Opt.Fontsize + 4, ...
-        'xoff', 0, ...
-        'yoff', .05);
-    
+         'fontsize', Opt.Fontsize + 4, ...
+         'xoff', 0, ...
+         'yoff', .05);
+
 end

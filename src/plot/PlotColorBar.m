@@ -18,7 +18,7 @@ function PlotColorBar(Opt, CLIM)
                        [1, 200]), ...
                 CLIM);
 
-        NbTicks = 5;    
+        NbTicks = 5;
         yTick = linspace(1, numel(ColorScale), NbTicks);
         yTickLabel = linspace(CLIM(2), CLIM(1), NbTicks);
         yTickLabel = round(yTickLabel, 1);
