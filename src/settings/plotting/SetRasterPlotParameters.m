@@ -28,7 +28,7 @@ function RasterDefaults = GetRasterDefaults()
     % we use a clean blue to red color map
     % otherwise we go for a more flashy seismic colormap
     try
-        color_map_folder = fullfile(fileparts(which('map_luminance')), '..', 'mat_maps');
+        color_map_folder = fullfile(fileparts(which('loadLutSub')), '..', 'mat_maps');
         load(fullfile(color_map_folder, 'diverging_bwr_iso.mat'));
         RasterDefaults.Raster.ColorMap = diverging_bwr;
     catch

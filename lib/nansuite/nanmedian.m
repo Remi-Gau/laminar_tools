@@ -1,11 +1,11 @@
 function y = nanmedian(x,dim)
 % FORMAT: Y = NANMEDIAN(X,DIM)
-% 
+%
 %    Median ignoring NaNs
 %
 %    This function enhances the functionality of NANMEDIAN as distributed
 %    in the MATLAB Statistics Toolbox and is meant as a replacement (hence
-%    the identical name).  
+%    the identical name).
 %
 %    NANMEDIAN(X,DIM) calculates the mean along any dimension of the N-D
 %    array X ignoring NaNs.  If DIM is omitted NANMEDIAN averages along the
@@ -20,7 +20,7 @@ function y = nanmedian(x,dim)
 %    author:      Jan Gläscher
 %    affiliation: Neuroimage Nord, University of Hamburg, Germany
 %    email:       glaescher@uke.uni-hamburg.de
-%    
+%
 %    $Revision: 1.2 $ $Date: 2007/07/30 17:19:19 $
 
 if isempty(x)

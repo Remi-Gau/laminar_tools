@@ -1,19 +1,19 @@
 function y = nanstd(x,dim,flag)
 % FORMAT: Y = NANSTD(X,DIM,FLAG)
-% 
+%
 %    Standard deviation ignoring NaNs
 %
 %    This function enhances the functionality of NANSTD as distributed in
 %    the MATLAB Statistics Toolbox and is meant as a replacement (hence the
-%    identical name).  
+%    identical name).
 %
 %    NANSTD(X,DIM) calculates the standard deviation along any dimension of
-%    the N-D array X ignoring NaNs.  
+%    the N-D array X ignoring NaNs.
 %
 %    NANSTD(X,DIM,0) normalizes by (N-1) where N is SIZE(X,DIM).  This make
 %    NANSTD(X,DIM).^2 the best unbiased estimate of the variance if X is
 %    a sample of a normal distribution. If omitted FLAG is set to zero.
-%    
+%
 %    NANSTD(X,DIM,1) normalizes by N and produces the square root of the
 %    second moment of the sample about the mean.
 %
@@ -29,7 +29,7 @@ function y = nanstd(x,dim,flag)
 %    author:      Jan Gläscher
 %    affiliation: Neuroimage Nord, University of Hamburg, Germany
 %    email:       glaescher@uke.uni-hamburg.de
-%    
+%
 %    $Revision: 1.1 $ $Date: 2004/07/15 22:42:15 $
 
 if isempty(x)
@@ -44,8 +44,8 @@ end
 if nargin < 2
 	dim = min(find(size(x)~=1));
 	if isempty(dim)
-		dim = 1; 
-	end	  
+		dim = 1;
+	end
 end
 
 
@@ -53,7 +53,7 @@ end
 nans = isnan(x);
 avg = nanmean(x,dim);
 
-% create array indicating number of element 
+% create array indicating number of element
 % of x in dimension DIM (needed for subtraction of mean)
 tile = ones(1,max(ndims(x),dim));
 tile(dim) = size(x,dim);
@@ -64,7 +64,7 @@ x = x - repmat(avg,tile);
 count = size(x,dim) - sum(nans,dim);
 
 % Replace NaNs with zeros.
-x(isnan(x)) = 0; 
+x(isnan(x)) = 0;
 
 
 % Protect against a  all NaNs in one dimension

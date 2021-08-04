@@ -24,7 +24,7 @@ function Defaults = GetDefaults()
     Defaults.ReassignIpsiContra = true;
 
     Defaults.PoolIpsiContra = false;
-    
+
     Defaults.CombineHemisphere = false;
 
     Defaults.Targets = false;

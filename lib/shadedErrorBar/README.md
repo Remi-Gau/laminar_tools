@@ -1,7 +1,7 @@
 # shadedErrorBar
 
-`shadedErrorBar` is a MATLAB function that creates a continuous shaded error region around a line rather than discrete bars. 
-The error region can either be specified explicitly or calculated on the fly based upon function handles. 
+`shadedErrorBar` is a MATLAB function that creates a continuous shaded error region around a line rather than discrete bars.
+The error region can either be specified explicitly or calculated on the fly based upon function handles.
 The appearance of the plot can be modified via input argumets and/or the handles of the returned plot objects.
 You will need OpenGL to get transparency to work.
 
@@ -19,7 +19,7 @@ y = bsxfun(@plus,y,yP)+60;
 
 % Make the plot
 clf
-shadedErrorBar(x,y,{@mean,@std}); 
+shadedErrorBar(x,y,{@mean,@std});
 
 % Overlay the raw data
 hold on
@@ -35,7 +35,7 @@ grid on
 ### Overlaying multiple lines
 ```
 % Prepare data for first line
-y=ones(30,1)*x; 
+y=ones(30,1)*x;
 y=y+0.06*y.^2+randn(size(y))*10;
 
 clf
@@ -46,7 +46,7 @@ hold on
 shadedErrorBar(x,2*y+20,{@mean,@std},'lineprops',{'-go','MarkerFaceColor','g'});
 
 %Overlay third line
-y=randn(30,80)*5; 
+y=randn(30,80)*5;
 x=(1:size(y,2))-40;
 yP = sin( linspace(-2*pi,2*pi,length(x)) )*20;
 y = bsxfun(@plus,y,yP)+60;
@@ -63,7 +63,7 @@ grid on
 ### Modifying plot properties post-hoc
 ```
 % Prepare data
-y=randn(30,80)*5; 
+y=randn(30,80)*5;
 x=(1:size(y,2));
 yP = sin( linspace(-2*pi,2*pi,length(x)) )*20;
 y = bsxfun(@plus,y,yP);
@@ -105,7 +105,7 @@ set(gca,'XTickLabel',[],'YTickLabel',[])
 * No longer changes the renderer.
 
 # Contributing
-If you wish to contribute please fork the repo, check out the `dev` branch and make your changes there, then file a pull request describing what you did. 
+If you wish to contribute please fork the repo, check out the `dev` branch and make your changes there, then file a pull request describing what you did.
 
-# Licensing 
-This code is licensed under the lesser GPL v3. See `LICENSE` file in the repository. 
+# Licensing
+This code is licensed under the lesser GPL v3. See `LICENSE` file in the repository.

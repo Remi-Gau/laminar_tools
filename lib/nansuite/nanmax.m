@@ -1,6 +1,6 @@
 function [y,idx] = nanmax(a,dim,b)
 % FORMAT: [Y,IDX] = NANMAX(A,DIM,[B])
-% 
+%
 %    Maximum ignoring NaNs
 %
 %    This function enhances the functionality of NANMAX as distributed in
@@ -19,9 +19,9 @@ function [y,idx] = nanmax(a,dim,b)
 %
 %    Comparing two matrices in a particular dimension is not supported,
 %    e.g. NANMAX(A,2,B) is invalid.
-%    
+%
 %    [Y,IDX] = NANMAX(X,DIM) returns the index to the maximum in IDX.
-%    
+%
 %    Similar replacements exist for NANMIN, NANMEAN, NANSTD, NANMEDIAN and
 %    NANSUM which are all part of the NaN-suite.
 %
@@ -31,7 +31,7 @@ function [y,idx] = nanmax(a,dim,b)
 %    author:      Jan Gläscher
 %    affiliation: Neuroimage Nord, University of Hamburg, Germany
 %    email:       glaescher@uke.uni-hamburg.de
-%    
+%
 %    $Revision: 1.1 $ $Date: 2004/07/15 22:42:11 $
 
 if nargin < 1

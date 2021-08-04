@@ -6,7 +6,7 @@ function H=demoOctave_shadedErrorBar
 % No input or output arguments.
 %
 %
-% 
+%
 
 
 
@@ -24,7 +24,7 @@ y=randn(30,80)*5;
 x=(1:size(y,2))-40;
 yP = sin( linspace(-2*pi,2*pi,length(x)) )*20;
 y = bsxfun(@plus,y,yP)+60;
-shadedErrorBar(x,y,{@mean,@std}); 
+shadedErrorBar(x,y,{@mean,@std});
 
 hold on
 plot(x,y,'.','color',[0.5,0.5,0.95])
@@ -43,18 +43,18 @@ hold on
 plot2styles = {'-b';'-g'; '-r'};
 for i = 1:3
   plt2invis = plot(0,0,plot2styles{i});
-  set( plt2invis, 'visible', 'off'); 
+  set( plt2invis, 'visible', 'off');
 end
-  
+
 
 
 x=(1:size(y,2))-40;
-y=ones(30,1)*x; 
+y=ones(30,1)*x;
 y=y+0.06*y.^2+randn(size(y))*10;
 shadedErrorBar(x,y,{@mean,@std},'lineprops','-b','transparent',true,'patchSaturation',0.9)
 shadedErrorBar(x,2*y+20,{@mean,@std},'lineprops',{'-go','MarkerFaceColor','g'},'transparent',true,'patchSaturation',0.9);
 
-y=randn(30,80)*5; 
+y=randn(30,80)*5;
 x=(1:size(y,2))-40;
 yP = sin( linspace(-2*pi,2*pi,length(x)) )*20;
 y = bsxfun(@plus,y,yP)+60;
@@ -74,7 +74,7 @@ subplot(rows,cols,3)
 % Post-hoc modifications of line properties
 
 
-y=randn(30,80)*5; 
+y=randn(30,80)*5;
 x=(1:size(y,2));
 yP = sin( linspace(-2*pi,2*pi,length(x)) )*20;
 y = bsxfun(@plus,y,yP);
@@ -108,7 +108,7 @@ subplot(rows,cols,4)
 % Post-hoc modifications of line properties
 
 
-y=randn(256,80)*5; 
+y=randn(256,80)*5;
 x=(1:size(y,2));
 yP = cos( linspace(-2*pi,2*pi,length(x)) )*10;
 y = bsxfun(@plus,y,yP);

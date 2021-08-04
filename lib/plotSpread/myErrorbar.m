@@ -63,7 +63,7 @@ switch length(varargin)
         y = y(:);
         lengthY = length(y);
         x = [1:lengthY]';
-        
+
         e = varargin{2};
         % check for 2 dimension errorbars
         e = e(:);
@@ -71,7 +71,7 @@ switch length(varargin)
             e = reshape(e,lengthY,2);
         end
         [l,u] = deal(e);
-        
+
     case 3
         % x,y,e
         x = varargin{1};
@@ -79,7 +79,7 @@ switch length(varargin)
         y = varargin{2};
         y = y(:);
         lengthY = length(y);
-        
+
         e = varargin{3};
         % check for 2 dimension errorbars
         e = e(:);
@@ -87,7 +87,7 @@ switch length(varargin)
             e = reshape(e,lengthY,2);
         end
         [l,u] = deal(e);
-        
+
     case 4
         % x,y,l,u
         % x,y,e
@@ -96,7 +96,7 @@ switch length(varargin)
         y = varargin{2};
         y = y(:);
         lengthY = length(y);
-        
+
         l = varargin{3};
         % check for 2 dimension errorbars
         l = l(:);
@@ -109,11 +109,11 @@ switch length(varargin)
         if length(u) == 2*lengthY
             u = reshape(u,lengthY,2);
         end
-        
+
         if ~all(size(u)==size(l))
             error('l, u have to be the same size!')
         end
-        
+
 end % switch number of inputs
 
 
@@ -164,7 +164,7 @@ end
 if strcmp('log',get(axesH,'XScale'))
     tee = (max(log(x(:)))-min(log(x(:))))/100;  % make tee .02 x-distance for error bars
     tee = min(tee,0.3*nanmedian(diff(unique(log(x(:)))))); % or at most 0.3*deltaX
-    
+
     xl = x *exp(tee);
     xr = x *exp(-tee);
 end
@@ -173,14 +173,14 @@ if xyBars
     if ~strcmp('log',get(axesH,'YScale'))
         tee = (max(y(:))-min(y(:)))/100;  % make tee .02 y-distance for error bars
         tee = min(tee,0.3*nanmedian(diff(unique(y(:))))); % or at most 0.3*deltaY
-        
+
         yl = y - tee;
         yr = y + tee;
     end
     if strcmp('log',get(axesH,'YScale'))
         tee = (max(log(y(:)))-min(log(y(:))))/100;  % make tee .02 y-distance for error bars
         tee = min(tee,0.3*nanmedian(diff(unique(log(y(:)))))); % or at most 0.3*deltaX
-        
+
         yl = y *exp(tee);
         yr = y *exp(-tee);
     end
@@ -224,7 +224,7 @@ yb(9:9:end,:) = NaN;
 h = [line(xb,yb,'parent',axesH,'Color',latestColor)];
 
 if xyBars
-    
+
     xb(1:9:end,:) = xtop;
     xb(2:9:end,:) = xbot;
     xb(3:9:end,:) = NaN;
@@ -234,7 +234,7 @@ if xyBars
     xb(7:9:end,:) = xbot;
     xb(8:9:end,:) = xbot;
     xb(9:9:end,:) = NaN;
-    
+
     yb(1:9:end,:) = y;
     yb(2:9:end,:) = y;
     yb(3:9:end,:) = NaN;
@@ -244,9 +244,9 @@ if xyBars
     yb(7:9:end,:) = yl;
     yb(8:9:end,:) = yr;
     yb(9:9:end,:) = NaN;
-    
+
     h = [h;line(xb,yb,'parent',axesH,'Color',latestColor)];
-    
+
 end
 
 %set the tag of all errorBar-objects to 'errorBar'

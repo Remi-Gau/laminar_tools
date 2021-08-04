@@ -1,6 +1,6 @@
 function [y,idx] = nanmin(a,dim,b)
 % FORMAT: [Y,IDX] = NANMIN(A,DIM,[B])
-% 
+%
 %    Minimum ignoring NaNs
 %
 %    This function enhances the functionality of NANMIN as distributed in
@@ -19,9 +19,9 @@ function [y,idx] = nanmin(a,dim,b)
 %
 %    Comparing two matrices in a particular dimension is not supported,
 %    e.g. NANMIN(A,2,B) is invalid.
-%    
+%
 %    [Y,IDX] = NANMIN(X,DIM) returns the index to the minimum in IDX.
-%    
+%
 %    Similar replacements exist for NANMAX, NANMEAN, NANSTD, NANMEDIAN and
 %    NANSUM which are all part of the NaN-suite.
 %
@@ -31,7 +31,7 @@ function [y,idx] = nanmin(a,dim,b)
 %    author:      Jan Gläscher
 %    affiliation: Neuroimage Nord, University of Hamburg, Germany
 %    email:       glaescher@uke.uni-hamburg.de
-%    
+%
 %    $Revision: 1.1 $ $Date: 2004/07/15 22:42:14 $
 
 if nargin < 1

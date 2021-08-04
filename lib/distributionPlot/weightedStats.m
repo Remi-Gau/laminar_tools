@@ -3,7 +3,7 @@ function [weightedMean,weightedStdOfMean,weightedStdOfSample] = weightedStats(da
 %
 %SYNOPSIS [weightedMean,weightedStd] = weightedStats(data, weightsOrSigma,sw)
 %
-%INPUT data: vector of input values. 
+%INPUT data: vector of input values.
 %
 %      weightsOrSigma: weights or standardDeviations of the input data
 %      sw (opt): switch, either 'w' or {'s'}
@@ -15,7 +15,7 @@ function [weightedMean,weightedStdOfMean,weightedStdOfSample] = weightedStats(da
 %       weightedStdOfMean: sigma1 = sqrt[sum_i{(yi-mw)^2/sigmai^2}/((n-1)*sum_i{1/sigmai^2})]
 %           which is the general weighted std OF THE MEAN (not the sample, i.e. it is divided by sqrt(n))
 %       weightedStdOfSample = weightedStdOfMean * sqrt(n)
-%       
+%
 %       CAUTION: according to www-gsi-vms.gsi.de/eb/people/wolle/buch/error.ps, if
 %       the uncertainity of the data points is much larger than the
 %       difference between them, sigma1 underestimates the "true" sigma.
@@ -87,7 +87,7 @@ if strcmp(sw,'s')
 	weights = max(weights,eps);
     end
     %assign weight 1 to the measurement with smallest error
-    weights = (repmat(min(weights,[],1),numRows,1)./weights).^2; 
+    weights = (repmat(min(weights,[],1),numRows,1)./weights).^2;
 end
 
 
@@ -106,12 +106,12 @@ weightedSSQ = nansum(squareDiffs.*weights,1);
 
 
 switch sw
-    
+
     case 'w'
-        
+
         %weighted mean : each squared difference from mean is weighted and divided by
         %the number of non-zero weights http://www.itl.nist.gov/div898/software/dataplot/refman2/ch2/weightsd.pdf
-        
+
         %get divisor (nnz is not defined for matrices)
         for i=numCols:-1:1
             % set NaN-weights to 0
@@ -120,12 +120,12 @@ switch sw
             nnzw = nnz(weights(:,i));
             divisor(1,i) = (nnzw-1)/nnzw*sumWeights(i);
         end
-        
+
         %assign output
         sigma = sqrt(weightedSSQ./divisor);
         weightedStdOfSample = sigma;
         weightedStdOfMean = sigma/sqrt(nnzw);
-        
+
     case 's'
         %calculate sigma1 = sqrt[sum_i{(yi-mw)^2/sigmai^2}/((n-1)*sum_i{1/sigmai^2})]
         %which is the general weighted std OF THE MEAN (not the sample, i.e. it is divided by sqrt(n))
@@ -136,19 +136,19 @@ switch sw
         %Hence, sigma2 = sqrt[1/sum_i{1/sigmai^2}] should be used. In
         %general, the true sigma is to be max(sigma1,sigma2)
 
-        
+
         %sigma1. Correct number of observations
         numRows = sum(~isnan(data) & ~isnan(weights),1);
         divisor = (numRows-1).*sumWeights;
         sigma1 = sqrt(weightedSSQ./divisor);
-        
+
         %sigma2
         %sigma2 = sqrt(1/sumWeights);
-        
+
         %assign output
         %weightedStdOfMean = max(sigma1,sigma2);
         weightedStdOfMean = sigma1;
         weightedStdOfSample = sigma1.*sqrt(numRows);
-        
-        
+
+
 end

@@ -3,8 +3,8 @@ function out = isEven(in)
 %
 % SYNOPSIS out = isEven(in)
 %
-% INPUT    in :  input (array) of numbers to be tested. 
-% OUTPUT   out:  array of size(in) with 
+% INPUT    in :  input (array) of numbers to be tested.
+% OUTPUT   out:  array of size(in) with
 %                   1 for even integers and zero
 %                   0 for odd integers
 %                 NaN for non-integers
@@ -19,7 +19,7 @@ out = mod(in+1, 2);
 out((out ~= 0) & (out ~= 1)) = NaN;
 
 % since doubles cannot be used for logical indexing, we should convert to
-% logicals if possible. 
+% logicals if possible.
 if all(isfinite(out(:)))
     out = logical(out);
 end
