@@ -14,15 +14,15 @@ function rgbVec = colorCode2rgb(c)
 %        'b' 'blue'
 %        'w' 'white'
 %        'k' 'black'
-% 
+%
 % OUTPUT rgbVec : vector with the rgb value
 %
-% EXAMPLE 
+% EXAMPLE
 %    rgb = colorCode2rgb('r')
 %    rgb =
 %          [1 0 0]
 
-if iscell(c) 
+if iscell(c)
     rgbVec = cell2mat(cellfun(@colorCode2rgb,c,'uni',false));
     return
 end

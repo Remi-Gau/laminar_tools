@@ -165,39 +165,39 @@ function handles = distributionPlot(varargin)
          distributionPlot([r,rn,rn2],'histOpt',2); % histOpt=2 works better for uniform distributions than the default
          set(ah,'ylim',[-1 2])
 
-         %--- additional options  
- 
+         %--- additional options
+
          data = [randn(100,1);randn(50,1)+4;randn(25,1)+8];
          subplot(3,4,5)
- 
+
          %--- defaults
-         distributionPlot(data); 
+         distributionPlot(data);
          subplot(3,4,6)
- 
+
          %--- show density via custom colormap only, show mean/std,
-         distributionPlot(data,'colormap',copper,'showMM',5,'variableWidth',false) 
+         distributionPlot(data,'colormap',copper,'showMM',5,'variableWidth',false)
          subplot(3,4,7:8)
- 
+
          %--- auto-binwidth depends on # of datapoints; for small n, plotting the data is useful
          % note that this option requires the additional installation
          % of plotSpread from the File Exchange (link below)
-         distributionPlot({data(1:5:end),repmat(data,2,1)},'addSpread',true,'showMM',false,'histOpt',2) 
- 
+         distributionPlot({data(1:5:end),repmat(data,2,1)},'addSpread',true,'showMM',false,'histOpt',2)
+
          %--- show quantiles
          subplot(3,4,9),distributionPlot(randn(100,1),'showMM',6)
- 
+
          %--- horizontal orientation
          subplot(3,4,10:11),
          distributionPlot({chi2rnd(3,1000,1),chi2rnd(5,1000,1)},'xyOri','flipped','histOri','right','showMM',0),
          xlim([-3 13])
- 
+
          %--- compare distributions side-by-side (see also example below)
          % plotting into specified axes will throw a warning that you can
          % turn off using " warning off DISTRIBUTIONPLOT:ERASINGLABELS "
          ah = subplot(3,4,12);
          subplot(3,4,12),distributionPlot(chi2rnd(3,1000,1),'histOri','right','color','r','widthDiv',[2 2],'showMM',0)
          subplot(3,4,12),distributionPlot(chi2rnd(5,1000,1),'histOri','left','color','b','widthDiv',[2 1],'showMM',0)
- 
+
          %--Use globalNorm to generate meaningful colorbar
          data = {randn(100,1),randn(500,1)};
          figure
@@ -218,14 +218,14 @@ function handles = distributionPlot(varargin)
            figure
            hh=distributionPlot({xx,xx,xx},'color','g','addSpread',1,'histOpt',2,'showMM',0);
            set(hh{4}{1},'color','r','marker','o')
-%} 
+%}
 %        END
 %
 % REMARKS To show distributions as clouds of points (~beeswarm plot),
 %         and/or to use the option "addSpread", please download the
 %         additional function plotSpread.m from the File Exchange
 %         http://www.mathworks.com/matlabcentral/fileexchange/37105-plot-spread-points-beeswarm-plot
-%         
+%
 %         I used to run ksdensity with the Epanechnikov kernel. However,
 %         for integer data, the shape of the kernel can produce peaks
 %         between the integers, which is not ideal (use histOpt=2 for
@@ -291,8 +291,8 @@ if ~iscell(varargin{1}) && isscalar(varargin{1}) == 1 && ...
     data = varargin{2};
     varargin(1:2) = [];
     newAx = false;
-    
-    
+
+
 else
     ah = gca;
     data = varargin{1};
@@ -355,8 +355,8 @@ if ~isempty(varargin) && ~ischar(varargin{1}) && ~isstruct(varargin{1})
     parserObj.addOptional('groups',def.groups);
     parserObj.addOptional('yLabel',def.yLabel);
     parserObj.addOptional('color',def.color);
-    
-    
+
+
     parserObj.parse(varargin{:});
     opt = parserObj.Results;
     % fill in defaults that are not supported in the old version of the
@@ -368,7 +368,7 @@ if ~isempty(varargin) && ~ischar(varargin{1}) && ~isstruct(varargin{1})
     opt.xMode = 'auto';
     opt.xyOri = 'normal';
     opt.widthDiv = [1 1];
-    
+
     % overwrite empties with defaults - inputParser considers empty to be a
     % valid input.
     fnList = fieldnames(opt);
@@ -377,8 +377,8 @@ if ~isempty(varargin) && ~ischar(varargin{1}) && ~isstruct(varargin{1})
             opt.(fn{1}) = def.(fn{1});
         end
     end
-    
-    
+
+
     % fix a few parameters
     if opt.distWidth > 1
         opt.distWidth = opt.distWidth - 1;
@@ -389,12 +389,12 @@ if ~isempty(varargin) && ~ischar(varargin{1}) && ~isstruct(varargin{1})
         opt.variableWidth = false;
         opt.distWidth = abs(opt.distWidth);
     end
-    
+
     if ~isempty(opt.xNames)
         opt.xMode = 'manual';
     end
-    
-    
+
+
 else
     defNames = fieldnames(def);
     for dn = defNames(:)'
@@ -404,11 +404,11 @@ else
             parserObj.addParameter(dn{1},def.(dn{1}));
         end
     end
-    
-    
+
+
     parserObj.parse(varargin{:});
     opt = parserObj.Results;
-    
+
     % if groups: deal with data
     if ~isempty(opt.groups)
         [idx,labels,vals] = grp2idx(opt.groups);
@@ -425,16 +425,16 @@ else
         if isnumeric(vals) && isempty(opt.xValues)
             opt.xValues = vals;
         end
-        
+
     end
-    
+
     if ~ischar(opt.xyOri) || ~any(ismember(opt.xyOri,{'normal','flipped'}))
         error('option xyOri must be either ''normal'' or ''flipped'' (is ''%s'')',opt.xyOri);
     end
-    
-    
-    
-    
+
+
+
+
 end
 % common checks
 
@@ -479,7 +479,7 @@ end
 if ~opt.variableWidth
     missingColormaps = find(cellfun(@isempty,opt.colormap));
     for iMissing = missingColormaps(:)'
-        
+
         endColor = opt.color{max(iMissing,length(opt.color))};
         % normally, we go from white to color
         cmap = zeros(128,3);
@@ -487,7 +487,7 @@ if ~opt.variableWidth
             cmap(:,rgb) = linspace(1,endColor(rgb),128);
         end
         opt.colormap{iMissing} = cmap;
-        
+
     end
 end
 
@@ -495,7 +495,7 @@ end
 % figure. Invert if necessary, and expand the cell array to nData
 colormapLength = cellfun(@(x)size(x,1),opt.colormap);
 if any(colormapLength>0)
-    
+
     colormap = cat(1,opt.colormap{:});
     if opt.invert
         colormap = 1-colormap;
@@ -510,9 +510,9 @@ if any(colormapLength>0)
         colormapOffset = [0;cumsum(colormapLength(1:end-1))];
         singleMap = false;
     end
-    
+
 else
-    
+
     colormapLength = zeros(nData,1);
     if length(opt.color) == 1
         opt.color = repmat(opt.color,nData,1);
@@ -570,15 +570,15 @@ for iData = 1:nData
     currentData = data{iData};
     % only plot if there is some finite data
     if ~isempty(currentData(:)) && any(isfinite(currentData(:)))
-        
+
         switch floor(opt.histOpt)
             case 0
                 % use hist
                 [xHist,yHist] = hist(currentData,opt.divFactor);
-                
+
             case 1
                 % use ksdensity
-                
+
                 if opt.histOpt == 1.1
                     % use histogram to estimate kernel
                     [dummy,x] = myHistogram(currentData); %#ok<ASGLU>
@@ -589,13 +589,13 @@ for iData = 1:nData
                         xHist = sum(isfinite(currentData));
                     else
                         dx = x(2) - x(1);
-                    
+
                     % make sure we sample frequently enough
                     x = min(x)-dx:dx/3:max(x)+dx;
                     [xHist,yHist] = ksdensity(currentData,x,'kernel','normal','width',dx/(1.5*opt.divFactor));
                     end
                 else
-                    
+
                     % x,y are switched relative to normal histogram
                     [xHist,yHist,u] = ksdensity(currentData,'kernel','normal');
                     % take smaller kernel to avoid over-smoothing
@@ -603,12 +603,12 @@ for iData = 1:nData
                         [xHist,yHist] = ksdensity(currentData,'kernel','normal','width',u/opt.divFactor);
                     end
                 end
-                
+
                 % modify histogram such that the sum of bins (not the
                 % integral under the curve!) equals the total number of
                 % observations, in order to be comparable to hist
                 xHist = xHist/sum(xHist)*sum(isfinite(currentData));
-                
+
             case 2
                 % use histogram - bar heights are counts as in hist
                 [xHist,yHist] = myHistogram(currentData,opt.divFactor,0);
@@ -631,7 +631,7 @@ switch opt.globalNorm
         xNorm(goodData) = xNorm(goodData) .* cellfun(@sum,plotData(goodData,1))';
         maxNorm(goodData) = cellfun(@max,plotData(goodData,1));
         xNorm(goodData) = xNorm(goodData)*max(maxNorm(goodData)./xNorm(goodData));
-        
+
     case 2
         % #2 should normalize so that the integral of the
         % different histograms (i.e. area covered) scale with the
@@ -648,32 +648,32 @@ end
 
 
 for iData = goodData'
-    
+
     % find current data again
     currentData = data{iData};
-    
+
     xHist = plotData{iData,1};
     yHist = plotData{iData,2};
-    
+
     % find y-step
     dy = min(diff(yHist));
     if isempty(dy)
         dy = 0.1;
     end
-    
+
     % create x,y arrays
     nPoints = length(xHist);
     xArray = repmat(xBase,1,nPoints);
     yArray = repmat([-0.5;-0.5;0.5;0.5],1,nPoints);
-    
-    
+
+
     % x is iData +/- almost 0.5, multiplied with the height of the
     % histogram
     if opt.variableWidth
-        
-        
+
+
         tmp = xArray.*repmat(xHist,4,1)./xNorm(iData);
-        
+
         switch opt.histOri
             case 'center'
                 % we can simply use xArray
@@ -687,24 +687,24 @@ for iData = goodData'
                 delta = tmp(1,:) - xArray(1,:);
                 xArray = bsxfun(@plus,tmp,delta);
         end
-        
+
         xArray = xArray + opt.xValues(iData);
-        
+
     else
         xArray = xArray + iData;
     end
-    
+
     % add offset (in case we have multiple widthDiv)
     xArray = xArray + xOffset;
-    
-    
+
+
     % yData is simply the bin locations
     yArray = repmat(yHist,4,1) + dy*yArray;
-    
+
     % add patch
     vertices = [xArray(:),yArray(:)];
     faces = reshape(1:numel(yArray),4,[])';
-    
+
     if colormapLength(iData) == 0
         colorOpt = {'FaceColor',opt.color{iData}};
     else
@@ -716,21 +716,21 @@ for iData = goodData'
             else
                 colorOpt = {'FaceVertexCData',xHist'/xNorm(iData),'CDataMapping','scaled','FaceColor','flat'};
             end
-            
+
         else
             idx = round((xHist/xNorm(iData))*(colormapLength(iData)-1))+1;
             colorOpt = {'FaceVertexCData',idx'+colormapOffset(iData),'CDataMapping','direct','FaceColor','flat'};
         end
     end
-    
-    
+
+
     switch opt.xyOri
         case 'normal'
             hh(iData)= patch('Vertices',vertices,'Faces',faces,'Parent',ah,colorOpt{:},'EdgeColor','none');
         case 'flipped'
             hh(iData)= patch('Vertices',vertices(:,[2,1]),'Faces',faces,'Parent',ah,colorOpt{:},'EdgeColor','none');
     end
-    
+
     if opt.showMM > 0
         if isHistogram
             [m(iData),sem(iData)] = weightedStats(currentData(:,1),currentData(:,2),'w');
@@ -747,16 +747,16 @@ for iData = goodData'
             sd(iData) = nanstd(currentData);
             sem(iData) = sd(iData)/sqrt(sum(isfinite(currentData)));
         end
-        
+
         if opt.showMM == 6
             % read quantiles - "y"-value, plus x-start-stop
             % re-use md array which allows using a loop below instead of
             % lots of copy-paste
             % md array is md/q1/q3, with third dimension y/xmin/xmax
-            
+
             md(iData,2,1) = prctile(currentData,25);
             md(iData,3,1) = prctile(currentData,75);
-            
+
             for qq = 1:3
                 % find corresponding y-bin
                 yLoc =  repmat(...
@@ -769,7 +769,7 @@ for iData = goodData'
                 md(iData,qq,2) = min( xArray( yLoc ) );
                 md(iData,qq,3) = max( xArray( yLoc ) );
             end
-            
+
         end
     end
 end % loop

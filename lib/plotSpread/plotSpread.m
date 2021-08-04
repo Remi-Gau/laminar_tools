@@ -148,10 +148,10 @@ if ~isempty(varargin) && ~ischar(varargin{1}) && ~isstruct(varargin{1})
     parserObj.addOptional('xNames',def.xNames);
     parserObj.addOptional('showMM',def.showMM);
     parserObj.addOptional('xValues',def.xValues);
-    
+
     parserObj.parse(varargin{:});
     opt = parserObj.Results;
-    
+
     opt.distributionIdx = [];
     opt.distributionColors = def.distributionColors;
     opt.distributionMarkers = def.distributionMarkers;
@@ -163,7 +163,7 @@ if ~isempty(varargin) && ~ischar(varargin{1}) && ~isstruct(varargin{1})
     opt.yLabel = '';
     opt.spreadWidth = def.spreadWidth;
     opt.individualLabels = false;
-    
+
     for fn = fieldnames(def)'
         if ~isfield(opt,fn{1})
             % Manually adding the new defaults means a lot fewer bugs
@@ -173,15 +173,15 @@ if ~isempty(varargin) && ~ischar(varargin{1}) && ~isstruct(varargin{1})
             opt.(fn{1}) = def.(fn{1});
         end
     end
-    
+
 else
     % new syntax
     defNames = fieldnames(def);
     for dn = defNames(:)'
         parserObj.addParamValue(dn{1},def.(dn{1}));
     end
-    
-    
+
+
     parserObj.parse(varargin{:});
     opt = parserObj.Results;
 end
@@ -244,7 +244,7 @@ if iscell(opt.distributionColors)
     elseif length(opt.distributionColors) ~= nData
         error('please submit one color per distribution (%i dist, %i colors)',nData,length(opt.distributionColors));
     end
-    
+
 else
     if size(opt.distributionColors,2) ~= 3
         error('please specify colormap with three columns')
@@ -254,7 +254,7 @@ else
     elseif size(opt.distributionColors,1) ~= nData
         error('please submit one color per distribution (%i dist, %i colors)',nData,size(opt.distributionColors,1));
     end
-    
+
     % create a cell array
     opt.distributionColors = mat2cell(opt.distributionColors,ones(nData,1),3);
 end
@@ -276,7 +276,7 @@ if isempty(opt.xValues)
 end
 
 
-if isempty(opt.spreadWidth) 
+if isempty(opt.spreadWidth)
     % scale width
     tmp = median(diff(sort(opt.xValues)));
     if ~isnan(tmp)
@@ -338,7 +338,7 @@ else
             end
         end
     end
-    
+
 end
 
 
@@ -362,7 +362,7 @@ if nCategories > 1
             categoryIsLabeled = true;
         end
     end
-    
+
     if ~any(strcmp('categoryMarkers',parserObj.UsingDefaults))
         if length(opt.categoryMarkers) ~= nCategories
             error('please supply one category marker per category')
@@ -373,16 +373,16 @@ if nCategories > 1
         plotMarkers = repmat(opt.categoryMarkers(:)',nData,1);
         categoryIsLabeled = true;
     end
-    
+
     if ~categoryIsLabeled
         % use distinguishable_colors to mark categories
-        
+
         plotColors = repmat( mat2cell(...
             distinguishable_colors(nCategories),...
             ones(nCategories,1),3)', nData,1);
-        
+
     end
-    
+
 end
 
 
@@ -408,7 +408,7 @@ switch opt.xyOri
         plot([0.5;nData+0.5],minMax,'o');
     case 'flipped'
         plot(minMax,[0.5;nData+0.5],'o');
-        
+
 end
 aspectRatio = get(gca,'DataAspectRatio');
 close(fh);
@@ -425,22 +425,22 @@ end
 % make sure xValues are not something weird
 opt.xValues = double(opt.xValues);
 
-    
+
 % augment data to make n-by-2
 data(:,2) = 0;
 for iData = 1:nData
     currentDataIdx = distributionIdx==iData;
     currentData = data(currentDataIdx,1);
-    
+
     if ~isempty(currentData)
-        
+
         % transform and sort
         currentData = currentData / tFact;
         %currentData = sort(currentData);
-        
+
         % add x
         currentData = [ones(size(currentData))*opt.xValues(iData),currentData]; %#ok<AGROW>
-        
+
         % step through the data in 0.1 increments. If there are multiple
         % entries, spread along x
         for y = min(currentData(:,2)):opt.binWidth:max(currentData(:,2))
@@ -468,12 +468,12 @@ for iData = 1:nData
                 end
             end
         end
-        
+
         % update data
         currentData(:,2) = data(currentDataIdx,1);
         data(currentDataIdx,:) = currentData;
-        
-        
+
+
         if opt.showMM > 0
             m(iData) = nanmean(currentData(:,2));
             md(iData) = nanmedian(currentData(:,2));
@@ -525,7 +525,7 @@ switch opt.xyOri
             case 'auto'
                 % no need to do anything
         end
-        
+
         % have plot start/end properly
         minX = min(opt.xValues)-stdWidth;
         maxX = max(opt.xValues)+stdWidth;
@@ -535,9 +535,9 @@ switch opt.xyOri
             maxX = max(maxX,oldLim(2));
         end
         xlim([minX,maxX])
-        
+
         ylabel(ah,opt.yLabel)
-        
+
     case 'flipped'
         switch opt.xMode
             case 'manual'
@@ -548,7 +548,7 @@ switch opt.xyOri
             case 'auto'
                 % no need to do anything
         end
-        
+
         % have plot start/end properly (for ease of copying, only switch
         % xlim to ylim
         minX = min(opt.xValues)-stdWidth;
@@ -559,9 +559,9 @@ switch opt.xyOri
             maxX = max(maxX,oldLim(2));
         end
         ylim([minX,maxX])
-        
+
         xlabel(ah,opt.yLabel);
-        
+
 end
 
 % ## in development
@@ -576,7 +576,7 @@ if ~opt.individualLabels
        end
            end
        end
-       
+
 end
 
 

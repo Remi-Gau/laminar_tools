@@ -115,8 +115,8 @@ if factor ~= -1
     % consider the distribution discrete if there are, on average, 3
     % entries per bin
     nBins = length(xx);
-    if factor == -2 || (factor ~= -3 && nBins*3 < nData) 
-        % discrete distribution. 
+    if factor == -2 || (factor ~= -3 && nBins*3 < nData)
+        % discrete distribution.
         nn = nn';
         xx = xx';
     else
@@ -128,23 +128,23 @@ if factor ~= -1
             if factor < 0
                 factor = 1;
             end
-            
+
             % create bins with the optimal bin width
             % W = 2*(IQD)*N^(-1/3)
             interQuartileDist = diff(prctile(data,[25,75]));
             binLength = 2*interQuartileDist*length(data)^(-1/3)*factor;
-            
+
             % number of bins: divide data range by binLength
             nBins = round((max(data)-min(data))/binLength);
-            
+
             if ~isfinite(nBins)
                 nBins = length(unique(data));
             end
-            
+
         end
-        
-        
-        
+
+
+
         % histogram
         [nn,xx] = hist(data,nBins);
         % adjust the height of the histogram
@@ -152,7 +152,7 @@ if factor ~= -1
             Z = trapz(xx,nn);
             nn = nn * nData/Z;
         end
-        
+
     end
     if nargout > 0
         N = nn;
@@ -166,14 +166,14 @@ if factor ~= -1
             bar(xx,nn,1);
         end
     end
-    
+
 else
     % make cdf, smooth with spline, then take the derivative of the spline
-    
+
     % cdf
     xData = sort(data);
     yData = 1:nData;
-    
+
     % when using too many data points, the spline fits very locally, and
     % the derivatives can still be huge. Good results can be obtained with
     % 500-1000 points. Use 1000 for now
@@ -181,13 +181,13 @@ else
     step = max(floor(nData/myFactor),1);
     xData2 = xData(1:step:end);
     yData2 = yData(1:step:end);
-    
+
     % spline. Use strong smoothing
     cdfSpline = csaps(xData2,yData2,1./(1+mean(diff(xData2))^3/0.0006));
-    
+
     % pdf is the derivative of the cdf
     pdfSpline = fnder(cdfSpline);
-    
+
     % histogram
     if nargout > 0
         xDataU = unique(xData);

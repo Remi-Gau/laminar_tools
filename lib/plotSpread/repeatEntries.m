@@ -21,7 +21,7 @@ function out = repeatEntries(val,kTimes)
 % a = find(nn);
 % index = zeros(sum(nn),1);
 % index([1;cumsum(nn(a(1:end-1)))+1])=1;
-% 
+%
 % % get the indices
 % ii = a(cumsum(index));
 

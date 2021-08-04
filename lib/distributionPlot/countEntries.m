@@ -46,10 +46,10 @@ end
 
 
 if ~doRow %do the fast method
-    
+
     %make m into a vector
     m = m(:);
-    
+
     % new approach: remove NaNs, find uniques, use hist for counting, then
     % use ismember and find(isnan()) for whereIdx if requested. The old
     % approach won't work with the changes to unique :(
@@ -59,23 +59,23 @@ if ~doRow %do the fast method
     % are all equal and >1 (the bins are interpreted as number of bins, not
     % a vector of bins!)
     numberOfOccurences = histc(mFinite,uniqueEntries);
-    
 
-    
+
+
     % check for inf
     infIdx = m==inf;
     if any(infIdx)
         uniqueEntries(end+1) = inf;
         numberOfOccurences(end+1) = sum(infIdx);
     end
-    
+
     needWhere = nargout > 2;
     nanIdx = isnan(m);
     [~,whereIdx] = ismember(m(~nanIdx),uniqueEntries);
-    
+
     % add back NaNs at the end
     if keepNaN
-        
+
         if any(nanIdx)
             uniqueEntries(end+1) = NaN;
             numberOfOccurences(end+1) = sum(nanIdx);
@@ -86,19 +86,19 @@ if ~doRow %do the fast method
             end
         end
     end
-    
-   
-    
-    
+
+
+
+
 else %do it the complicated way
-    
+
     %we do not care about the ordering of the matrix here: if the user
     %specified rows, he/she wanted a columnVector as output (or should read the help)
     [uniqueEntries, dummy, uniqueIdx] = unique(m,'rows');
-    
+
     %rember output
     whereIdx = uniqueIdx;
-    
+
     if ~keepNaN
         % remove NaN, inf
         badIdx = find(any(~isfinite(uniqueEntries),2));
@@ -106,25 +106,25 @@ else %do it the complicated way
         whereIdx(ismember(whereIdx,badIdx)) = [];
         uniqueIdx = whereIdx;
     end
-    
+
     %uniqueIdx returns the indexList where uniqueEntriy #x occurs.
     %We will now sort this list and take a diff to find where this index
     %changes.
     %adding zero and length(uniqueIndex) to the vector, we can now via
     %another diff see how many entries there are (see example)
-    
+
     %example m: [11,11,22,33,33,22,22,22,44,11]
     %corresponding uniqueEntries, uniqueIdx: [11,22,33,44] / [1 1 2 3 3 2 2 2 4 1]
-    
+
     %sort: [1     1     1     2     2     2     2     3     3     4]
     sortedIdx = sort(uniqueIdx);
-    
+
     %diff: [0     0     1     0     0     0     1     0     1]
     sortedIdxDiff = diff(sortedIdx);
-    
+
     %find and add entries: [0     3     7     9    10]
     changeValueIdx = [0;find(sortedIdxDiff);length(uniqueIdx)];
-    
+
     %diff again for the numberOfOccurences: [3     4     2     1]
     numberOfOccurences = diff(changeValueIdx);
 end

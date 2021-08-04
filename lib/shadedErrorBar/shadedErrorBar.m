@@ -3,7 +3,7 @@ function varargout=shadedErrorBar(x,y,errBar,varargin)
 %
 % function H=shadedErrorBar(x,y,errBar, ...)
 %
-% Purpose 
+% Purpose
 % Makes a 2-d line plot with a pretty shaded error bar made
 % using patch. Error bar color is chosen automatically.
 %
@@ -15,20 +15,20 @@ function varargout=shadedErrorBar(x,y,errBar,varargin)
 % errBar - if a vector we draw symmetric errorbars. If it has a size
 %          of [2,length(x)] then we draw asymmetric error bars with
 %          row 1 being the upper bar and row 2 being the lower bar
-%          (with respect to y -- see demo). ** alternatively ** 
-%          errBar can be a cellArray of two function handles. The 
-%          first defines statistic the line should be and the second 
+%          (with respect to y -- see demo). ** alternatively **
+%          errBar can be a cellArray of two function handles. The
+%          first defines statistic the line should be and the second
 %          defines the error bar.
 %
 % Inputs (optional, param/value pairs)
 % 'lineProps' - ['-k' by default] defines the properties of
-%             the data line. e.g.:    
+%             the data line. e.g.:
 %             'or-', or {'-or','markerfacecolor',[1,0.2,0.2]}
 % 'transparent' - [true  by default] if true, the shaded error
 %               bar is made transparent. However, for a transparent
 %               vector image you will need to save as PDF, not EPS,
-%               and set the figure renderer to "painters". An EPS 
-%               will only be transparent if you set the renderer 
+%               and set the figure renderer to "painters". An EPS
+%               will only be transparent if you set the renderer
 %               to OpenGL, however this makes a raster image.
 % 'patchSaturation'- [0.2 by default] The saturation of the patch color.
 %
@@ -39,7 +39,7 @@ function varargout=shadedErrorBar(x,y,errBar,varargin)
 %
 %
 % Examples:
-% y=randn(30,80); 
+% y=randn(30,80);
 % x=1:size(y,2);
 %
 % 1)
@@ -54,7 +54,7 @@ function varargout=shadedErrorBar(x,y,errBar,varargin)
 % 4)
 % Overlay two transparent lines:
 % clf
-% y=randn(30,80)*10; 
+% y=randn(30,80)*10;
 % x=(1:size(y,2))-40;
 % shadedErrorBar(x,y,{@mean,@std},'lineProps','-r','transparent',1);
 % hold on
@@ -93,7 +93,7 @@ if ~iscell(lineProps), lineProps={lineProps}; end
 
 
 %Process y using function handles if needed to make the error bar dynamically
-if iscell(errBar) 
+if iscell(errBar)
     fun1=errBar{1};
     fun2=errBar{2};
     errBar=fun2(y);
@@ -104,7 +104,7 @@ end
 
 if isempty(x)
     x=1:length(y);
-elseif sum( size(ver('MATLAB'))) > 0 
+elseif sum( size(ver('MATLAB'))) > 0
     x=x(:).';
 end
 
@@ -130,7 +130,7 @@ elseif( ( length(x) ~= length(errBar) && checkOctave_datestr(x) == false ) ...
     error('length(x) must equal length(errBar) or x must have valid datestr')
 end
 
- 
+
 %Log the hold status so we don't change
 initialHoldStatus=ishold;
 if ~initialHoldStatus, hold on,  end
@@ -156,11 +156,11 @@ function H = makePlot(x,y,errBar,lineProps,transparent,patchSaturation)
     elseif (sum(size(ver('Octave'))) > 0)
       hostName = 'Octave';
     end % if
-    
+
     % Plot to get the parameters of the line
     if hostName == 'MATLAB'
       H.mainLine=plot(x,y,lineProps{:});
-      
+
     elseif hostName == 'Octave'
       boolxDatestr = checkOctave_datestr(x);
       if boolxDatestr
@@ -205,7 +205,7 @@ function H = makePlot(x,y,errBar,lineProps,transparent,patchSaturation)
     %remove nans otherwise patch won't work
     xP(isnan(yP))=[];
     yP(isnan(yP))=[];
-    
+
 
     if isdatetime(x) && strcmp(hostName,'MATLAB')
       H.patch=patch(datenum(xP),yP,1);
@@ -221,7 +221,7 @@ function H = makePlot(x,y,errBar,lineProps,transparent,patchSaturation)
         'Tag', 'shadedErrorBar_patch')
 
 
-    %Make pretty edges around the patch. 
+    %Make pretty edges around the patch.
     H.edge(1)=plot(x,lE,'-');
     H.edge(2)=plot(x,uE,'-');
 
@@ -251,4 +251,4 @@ function boolDate = checkOctave_datestr(x)
   catch
     boolDate = false;
   end
- 
+

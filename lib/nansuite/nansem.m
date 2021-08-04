@@ -1,10 +1,10 @@
 function y = nansem(x,dim)
 % FORMAT: Y = NANSEM(X,DIM)
-% 
+%
 %    Standard error of the mean ignoring NaNs
 %
 %    NANSTD(X,DIM) calculates the standard error of the mean along any
-%    dimension of the N-D array X ignoring NaNs.  
+%    dimension of the N-D array X ignoring NaNs.
 %
 %    If DIM is omitted NANSTD calculates the standard deviation along first
 %    non-singleton dimension of X.
@@ -16,7 +16,7 @@ function y = nansem(x,dim)
 %    author:      Jan Gläscher
 %    affiliation: Neuroimage Nord, University of Hamburg, Germany
 %    email:       glaescher@uke.uni-hamburg.de
-%    
+%
 %    $Revision: 1.1 $ $Date: 2004/07/22 09:02:27 $
 
 if isempty(x)
@@ -27,8 +27,8 @@ end
 if nargin < 2
 	dim = min(find(size(x)~=1));
 	if isempty(dim)
-		dim = 1; 
-	end	  
+		dim = 1;
+	end
 end
 
 
